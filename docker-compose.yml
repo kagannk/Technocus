@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: technocus_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-tekno_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tekno_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-technocus_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - custom_postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: technocus_backend
+    env_file:
+      - .env
+    restart: always
+    command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALGORITHM=${ALGORITHM}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
+      - IYZICO_API_KEY=${IYZICO_API_KEY}
+      - IYZICO_SECRET_KEY=${IYZICO_SECRET_KEY}
+      - IYZICO_BASE_URL=${IYZICO_BASE_URL}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - N8N_WEBHOOK_URL=http://n8n:5678
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: technocus_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - /app/.next
+    command: sh -c "npm run build -- --no-lint && npx next start -p 3000 -H 0.0.0.0"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+
+  n8n:
+    image: n8nio/n8n
+    container_name: tekno_n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=Admin123
+      - WEBHOOK_URL=http://localhost:5678
+    volumes:
+      - n8n_data:/home/node/.n8n
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+volumes:
+  custom_postgres_data:
+  n8n_data:

@@ -1,0 +1,8 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="256" rx="64" fill="#0f172a"/>
+  <!-- T letter -->
+  <path d="M60 80C60 74.4772 64.4772 70 70 70H186C191.523 70 196 74.4772 196 80V96C196 101.523 191.523 106 186 106H146V186C146 191.523 141.523 196 136 196H120C114.477 196 110 191.523 110 186V106H70C64.4772 106 60 101.523 60 96V80Z" fill="#3b82f6"/>
+  <!-- Decorative electrical line / circuit -->
+  <circle cx="128" cy="128" r="12" fill="#22d3ee" />
+  <path d="M128 140V160L148 180" stroke="#22d3ee" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
