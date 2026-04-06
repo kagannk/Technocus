@@ -15,11 +15,15 @@ async def read_products(
     skip: int = 0, 
     limit: int = 500, 
     category_id: Optional[int] = None,
+    category_slug: Optional[str] = None,
     search: Optional[str] = None,
     db: AsyncSession = Depends(get_db)
 ):
+    from app.models.category import Category
     query = select(Product)
-    if category_id:
+    if category_slug:
+        query = query.join(Category, Product.category_id == Category.id).where(Category.slug == category_slug)
+    elif category_id:
         query = query.where(Product.category_id == category_id)
     if search:
         query = query.where(Product.name.ilike(f"%{search}%"))

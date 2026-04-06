@@ -49,7 +49,7 @@ export default function Home() {
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-electric-default via-cyan-400 to-purple-500 animate-gradient-x">Gerçeğe Dönüştür.</span>
           </h1>
           <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl leading-relaxed">
-            Arduino, Raspberry Pi, endüstriyel sensörler ve maker malzemelerinde Türkiye'nin en büyük donanım kütüphanesi.
+            Drone parçaları, robotik bileşenler, mikrodenetleyiciler ve elektronik modüllerde Türkiye'nin en kapsamlı mağazası.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link href="/products" className="bg-electric-default hover:bg-electric-hover text-white text-lg font-bold px-8 py-4 rounded-xl shadow-[0_10px_30px_rgba(59,130,246,0.4)] transition-all transform hover:-translate-y-1">
@@ -139,8 +139,8 @@ export default function Home() {
               <svg xmlns="http://www.w3.org/2000/svg" className="w-64 h-64 -translate-y-10 translate-x-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13.5H5.5L12 6.5z"/></svg>
            </div>
            <div className="relative z-10 mb-8 md:mb-0 text-center md:text-left">
-             <h3 className="text-3xl md:text-4xl font-black text-white mb-2">Yaz Fırsatları Başladı!</h3>
-             <p className="text-purple-200 text-lg">Öğrencilere özel tüm Raspberry Pi setlerinde <strong className="text-white">%15 indirim</strong> fırsatını kaçırmayın.</p>
+             <h3 className="text-3xl md:text-4xl font-black text-white mb-2">Drone Sezonu Açıldı!</h3>
+             <p className="text-purple-200 text-lg">FPV yarış ve freestyle ürünlerinde <strong className="text-white">%15 indirim</strong> fırsatını kaçırmayın.</p>
            </div>
            <div className="relative z-10 flex-shrink-0">
               <Link href="/campaigns" className="bg-white text-purple-900 hover:bg-gray-100 font-bold px-8 py-4 rounded-xl shadow-xl transition-transform hover:scale-105 inline-block">
