@@ -108,28 +108,24 @@ export default function Home() {
       <section>
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold text-white">Popüler Kategoriler</h2>
-          <Link href="/categories" className="text-electric-default hover:text-white font-bold transition-colors">Tüm Kategoriler &rarr;</Link>
+          <Link href="/products" className="text-electric-default hover:text-white font-bold transition-colors">Tüm Ürünler &rarr;</Link>
         </div>
         
-        {loading ? (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1,2,3,4].map(i => <div key={i} className="h-32 bg-navy-800 animate-pulse rounded-2xl border border-navy-700"></div>)}
-          </div>
-        ) : categories.length > 0 ? (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((cat) => (
-              <Link href={`/categories/${cat.slug}`} key={cat.id} className="bg-navy-800 hover:bg-navy-700 border border-navy-700 hover:border-electric-default/50 transition-all rounded-2xl p-6 text-center group cursor-pointer">
-                <div className="w-16 h-16 mx-auto bg-navy-900 rounded-full flex items-center justify-center mb-4 transition-transform group-hover:scale-110 shadow-inner">
-                  <span className="text-electric-default text-3xl font-black">{cat.name.charAt(0)}</span>
-                </div>
-                <h3 className="text-lg font-bold text-slate-200 group-hover:text-white transition-colors">{cat.name}</h3>
-                <p className="text-xs text-slate-500 mt-2">Daha fazla gör</p>
-              </Link>
-            ))}
-          </div>
-        ) : (
-          <div className="bg-navy-800 p-8 text-center rounded-xl text-slate-500">Kategori verisi bulunamadı.</div>
-        )}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {[
+            { slug: "drone", label: "Drone & FPV", emoji: "🚁", desc: "Motorlar, ESC, uçuş kontrolcüsü", color: "from-blue-900/40 to-cyan-900/20", border: "hover:border-cyan-500/50" },
+            { slug: "elektronik", label: "Elektronik", emoji: "⚡", desc: "Arduino, ESP32, sensörler", color: "from-yellow-900/40 to-orange-900/20", border: "hover:border-yellow-500/50" },
+            { slug: "robotik", label: "Robotik", emoji: "🤖", desc: "Servo, robot kitleri, hareket sistemleri", color: "from-purple-900/40 to-pink-900/20", border: "hover:border-purple-500/50" },
+          ].map((cat) => (
+            <Link href={`/categories/${cat.slug}`} key={cat.slug}
+              className={`bg-gradient-to-br ${cat.color} border border-navy-700 ${cat.border} transition-all rounded-2xl p-8 group cursor-pointer hover:-translate-y-1 shadow-lg`}>
+              <div className="text-5xl mb-4 transition-transform group-hover:scale-110 inline-block">{cat.emoji}</div>
+              <h3 className="text-xl font-black text-white mb-2 group-hover:text-electric-default transition-colors">{cat.label}</h3>
+              <p className="text-sm text-slate-400">{cat.desc}</p>
+              <div className="mt-4 text-xs font-bold text-slate-500 group-hover:text-electric-default transition-colors">Keşfet &rarr;</div>
+            </Link>
+          ))}
+        </div>
       </section>
 
       {/* 4. Kampanya Banner */}

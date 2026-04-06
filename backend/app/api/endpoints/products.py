@@ -12,25 +12,37 @@ router = APIRouter()
 
 @router.get("/", response_model=List[ProductResponse])
 async def read_products(
-    skip: int = 0, 
-    limit: int = 500, 
+    skip: int = 0,
+    limit: int = 500,
     category_id: Optional[int] = None,
     category_slug: Optional[str] = None,
     search: Optional[str] = None,
     db: AsyncSession = Depends(get_db)
 ):
     from app.models.category import Category
-    query = select(Product)
+    from sqlalchemy.orm import selectinload
+    from sqlalchemy import select as sa_select
+
+    query = sa_select(Product).options(selectinload(Product.category))
     if category_slug:
         query = query.join(Category, Product.category_id == Category.id).where(Category.slug == category_slug)
     elif category_id:
         query = query.where(Product.category_id == category_id)
     if search:
         query = query.where(Product.name.ilike(f"%{search}%"))
-        
+
     query = query.offset(skip).limit(limit)
     result = await db.execute(query)
-    return result.scalars().all()
+    products = result.scalars().all()
+
+    # Inject category_name into response
+    response = []
+    for p in products:
+        d = {c.name: getattr(p, c.name) for c in p.__table__.columns}
+        d["slug"] = p.slug
+        d["category_name"] = p.category.name if p.category else "Kategorisiz"
+        response.append(d)
+    return response
 
 @router.get("/search", response_model=List[ProductResponse])
 async def search_products(
