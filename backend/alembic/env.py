@@ -9,12 +9,19 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 config = context.config
 
-# Read DATABASE_URL from environment and convert asyncpg → psycopg2 for sync alembic
-database_url = os.getenv("DATABASE_URL", "")
-if database_url.startswith("postgresql+asyncpg://"):
-    database_url = database_url.replace("postgresql+asyncpg://", "postgresql://")
-elif not database_url:
-    # Fallback for local dev (docker-compose sets DATABASE_URL)
+# Normalize DATABASE_URL for psycopg2 (sync alembic needs postgresql://, not asyncpg)
+def _get_sync_db_url(url: str) -> str:
+    # Handle Railway's postgres:// shorthand
+    if url.startswith("postgres://"):
+        url = url.replace("postgres://", "postgresql://", 1)
+    # Strip asyncpg driver if present
+    if url.startswith("postgresql+asyncpg://"):
+        url = url.replace("postgresql+asyncpg://", "postgresql://", 1)
+    return url
+
+database_url = _get_sync_db_url(os.getenv("DATABASE_URL", ""))
+if not database_url:
+    # Fallback for local dev
     database_url = "postgresql://tekno_user:tekno_pass@db:5432/technocus_db"
 
 config.set_main_option("sqlalchemy.url", database_url)
