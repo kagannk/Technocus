@@ -13,4 +13,4 @@ EXPOSE 8000
 
 # Run alembic first; if it fails, still try to start uvicorn (|| true)
 # Then start uvicorn unconditionally
-CMD ["sh", "-c", "alembic upgrade head; uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1", "--log-level", "debug"]
