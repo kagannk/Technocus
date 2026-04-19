@@ -1,11 +1,17 @@
-import iyzipay
+try:
+    import iyzipay
+    IYZIPAY_AVAILABLE = True
+except ImportError:
+    iyzipay = None
+    IYZIPAY_AVAILABLE = False
+
 from app.core.config import settings
 from pydantic import BaseModel
 
 options = {
     'api_key': settings.IYZICO_API_KEY,
     'secret_key': settings.IYZICO_SECRET_KEY,
-    'base_url': settings.IYZICO_BASE_URL.replace('https://', '').replace('http://', '').strip('/')
+    'base_url': settings.IYZICO_BASE_URL.replace('https://', '').replace('http://', '').strip('/') if settings.IYZICO_BASE_URL else 'sandbox-api.iyzipay.com'
 }
 
 class PaymentRequestData(BaseModel):
@@ -19,7 +25,12 @@ class PaymentRequestData(BaseModel):
     billingAddress: dict
     basketItems: list
 
+def _check_iyzipay():
+    if not IYZIPAY_AVAILABLE or iyzipay is None:
+        raise RuntimeError("iyzipay modülü yüklenemedi. Ödeme sistemi devre dışı.")
+
 def initialize_checkout_form(order_data: PaymentRequestData, callback_url: str):
+    _check_iyzipay()
     request = {
         'locale': 'tr',
         'conversationId': order_data.basketId,
@@ -35,11 +46,11 @@ def initialize_checkout_form(order_data: PaymentRequestData, callback_url: str):
         'billingAddress': order_data.billingAddress,
         'basketItems': order_data.basketItems
     }
-    
     checkout_form_initialize = iyzipay.CheckoutFormInitialize().create(request, options)
     return checkout_form_initialize.read()
-    
+
 def retrieve_checkout_form_result(token: str):
+    _check_iyzipay()
     request = {
         'locale': 'tr',
         'token': token
@@ -48,6 +59,7 @@ def retrieve_checkout_form_result(token: str):
     return checkout_form_result.read()
 
 def create_direct_payment(order_data: PaymentRequestData, card_info: dict, card_user_key: str = None, save_card: bool = False):
+    _check_iyzipay()
     if 'card_token' in card_info and card_user_key:
         payment_card = {
             'cardToken': card_info['card_token'],
@@ -64,7 +76,7 @@ def create_direct_payment(order_data: PaymentRequestData, card_info: dict, card_
         }
         if card_user_key:
             payment_card['cardUserKey'] = card_user_key
-    
+
     request = {
         'locale': 'tr',
         'conversationId': order_data.basketId,
@@ -81,11 +93,11 @@ def create_direct_payment(order_data: PaymentRequestData, card_info: dict, card_
         'billingAddress': order_data.billingAddress,
         'basketItems': order_data.basketItems
     }
-    
     payment = iyzipay.Payment().create(request, options)
     return payment.read()
 
 def list_user_cards(card_user_key: str):
+    _check_iyzipay()
     request = {
         'locale': 'tr',
         'cardUserKey': card_user_key
@@ -94,6 +106,7 @@ def list_user_cards(card_user_key: str):
     return card_list.read()
 
 def delete_user_card(card_user_key: str, card_token: str):
+    _check_iyzipay()
     request = {
         'locale': 'tr',
         'cardUserKey': card_user_key,
