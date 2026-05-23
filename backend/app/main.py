@@ -197,6 +197,30 @@ async def startup_event():
                         logger.info(f"[SEED] Ürün oluşturuldu: {p['name']}")
             await db.commit()
             logger.info("[SEED] ✅ Kategori ve ürün seed tamamlandı.")
+            
+            # Ürünleri kategorilere eşleştirme
+            await db.execute(text("""
+                UPDATE products 
+                SET category_id = (SELECT id FROM categories WHERE slug = 'drone') 
+                WHERE LOWER(name) LIKE '%drone%' OR LOWER(description) LIKE '%drone%'
+            """))
+            await db.execute(text("""
+                UPDATE products 
+                SET category_id = (SELECT id FROM categories WHERE slug = 'elektronik') 
+                WHERE LOWER(name) LIKE '%arduino%' OR LOWER(description) LIKE '%arduino%'
+                OR LOWER(name) LIKE '%raspberry%' OR LOWER(description) LIKE '%raspberry%'
+                OR LOWER(name) LIKE '%elektronik%' OR LOWER(description) LIKE '%elektronik%'
+            """))
+            await db.execute(text("""
+                UPDATE products 
+                SET category_id = (SELECT id FROM categories WHERE slug = 'robotik') 
+                WHERE LOWER(name) LIKE '%robot%' OR LOWER(description) LIKE '%robot%'
+                OR LOWER(name) LIKE '%servo%' OR LOWER(description) LIKE '%servo%'
+                OR LOWER(name) LIKE '%motor%' OR LOWER(description) LIKE '%motor%'
+            """))
+            await db.commit()
+            logger.info("[SEED] ✅ Ürün kategorileri DB üzerinde eşleştirildi.")
+            
     except Exception as e:
         logger.error(f"[SEED] Hata: {e}")
 

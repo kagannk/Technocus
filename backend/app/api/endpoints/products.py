@@ -15,7 +15,7 @@ async def read_products(
     skip: int = 0,
     limit: int = 500,
     category_id: Optional[int] = None,
-    category_slug: Optional[str] = None,
+    category: Optional[str] = None,
     search: Optional[str] = None,
     db: AsyncSession = Depends(get_db)
 ):
@@ -24,8 +24,8 @@ async def read_products(
     from sqlalchemy import select as sa_select
 
     query = sa_select(Product).options(selectinload(Product.category))
-    if category_slug:
-        query = query.join(Category, Product.category_id == Category.id).where(Category.slug == category_slug)
+    if category:
+        query = query.join(Category, Product.category_id == Category.id).where(Category.slug == category)
     elif category_id:
         query = query.where(Product.category_id == category_id)
     if search:
