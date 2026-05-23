@@ -29,6 +29,7 @@ app.add_middleware(
             "http://localhost:3000",
             "http://127.0.0.1:3000",
             "https://technocus.vercel.app",
+            "https://technocus-production.up.railway.app",
             os.getenv("FRONTEND_URL", ""),
         ] if origin  # filter out empty strings
     ],
@@ -89,21 +90,22 @@ async def startup_event():
     except Exception as e:
         logger.error(f"[MIGRATION] Bağlantı hatası: {e}")
 
-    # Step 2: Seed admin — always force-overwrite hash for guaranteed login
+    # Step 2: Seed admin + test customer — always force-overwrite hash for guaranteed login
     try:
         async with AsyncSessionLocal() as db:
-            admin_email = "patron@technocus.com"
+            # --- Admin account ---
+            admin_email = "admin@technocus.com"
             result = await db.execute(select(User).where(User.email == admin_email))
             admin_user = result.scalars().first()
 
-            fresh_hash = get_password_hash("admin123")
+            admin_hash = get_password_hash("Admin1234!")
             logger.info(f"[STARTUP] Admin seed başlatılıyor: {admin_email}")
 
             if not admin_user:
                 new_admin = User(
                     email=admin_email,
-                    hashed_password=fresh_hash,
-                    full_name="Technocus Patron",
+                    hashed_password=admin_hash,
+                    full_name="Technocus Admin",
                     is_active=True,
                     is_admin=True
                 )
@@ -112,13 +114,37 @@ async def startup_event():
                 await db.refresh(new_admin)
                 logger.info("[STARTUP] ✅ Admin kullanıcısı oluşturuldu.")
             else:
-                # Her zaman şifreyi ve rolü güncelle — eski/bozuk hash'leri ez
-                admin_user.hashed_password = fresh_hash
+                admin_user.hashed_password = admin_hash
                 admin_user.is_admin = True
                 admin_user.is_active = True
                 await db.commit()
                 await db.refresh(admin_user)
                 logger.info("[STARTUP] ✅ Admin şifresi ve rolü güncellendi.")
+
+            # --- Test customer account ---
+            test_email = "test@technocus.com"
+            result = await db.execute(select(User).where(User.email == test_email))
+            test_user = result.scalars().first()
+
+            test_hash = get_password_hash("Test1234!")
+            if not test_user:
+                new_test = User(
+                    email=test_email,
+                    hashed_password=test_hash,
+                    full_name="Test Müşteri",
+                    is_active=True,
+                    is_admin=False
+                )
+                db.add(new_test)
+                await db.commit()
+                await db.refresh(new_test)
+                logger.info("[STARTUP] ✅ Test müşteri hesabı oluşturuldu.")
+            else:
+                test_user.hashed_password = test_hash
+                test_user.is_active = True
+                await db.commit()
+                await db.refresh(test_user)
+                logger.info("[STARTUP] ✅ Test müşteri şifresi güncellendi.")
     except Exception as e:
         logger.error(f"[STARTUP] Seed hatası: {e}")
 

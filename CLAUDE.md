@@ -5,8 +5,8 @@
 - Repo: https://github.com/kagannk/Technocus
 
 ## Son Güncelleme
-- Tarih: Mayıs 2026
-- Son odak: Railway + Vercel deploy, giriş/sepet/ödeme akışları
+- Tarih: 23 Mayıs 2026
+- Son odak: CORS + API bağlantısı + seed users + 401 fix
 
 ## Çalışma Kuralı — ÖNEMLİ
 Her görev tamamlandığında CLAUDE.md otomatik güncellenir.
@@ -30,18 +30,25 @@ Her promptun sonuna şunu ekle:
 
 ## Deploy Durumu — GÜNCEL
 
-| Servis     | Platform | Durum             | Notlar                          |
-|------------|----------|-------------------|---------------------------------|
-| Frontend   | Vercel   | ✅ Canlı          | NEXT_PUBLIC_API_URL set edilecek|
-| Backend    | Railway  | ✅ Canlı          | URL .env.local'a eklenecek      |
-| Database   | Railway  | ✅ Canlı          | DATABASE_URL Railway'den alınır |
+| Servis     | Platform | URL                                               | Durum    |
+|------------|----------|----------------------------------------------------|----------|
+| Frontend   | Vercel   | https://technocus.vercel.app                       | ✅ Canlı |
+| Backend    | Railway  | https://technocus-production.up.railway.app        | ✅ Canlı |
+| Database   | Railway  | (Railway internal)                                 | ✅ Canlı |
 
 ### Kritik Bağlantı Notları
-- Frontend (Vercel) → Backend (Railway): NEXT_PUBLIC_API_URL = Railway backend URL
-- CORS'a Vercel URL'i eklenecek: backend/main.py → FRONTEND_URL env variable
-- Alembic migration'ları Railway backend başlarken otomatik çalışacak
-- Railway panelinden: DATABASE_URL, SECRET_KEY kontrol et
-- Vercel panelinden: NEXT_PUBLIC_API_URL = Railway backend URL set et
+- Frontend (Vercel) → Backend (Railway): NEXT_PUBLIC_API_URL = https://technocus-production.up.railway.app
+- CORS ayarlandı: localhost:3000, technocus.vercel.app, Railway URL, FRONTEND_URL env
+- Alembic: lokalde aktif, Railway'de CMD ile çalışıyor
+- SSR API URL düzeltildi: api.ts artık tek NEXT_PUBLIC_API_URL kullanıyor
+
+### ❗ Vercel'de Yapılması Gereken (Manuel)
+Vercel Dashboard → Settings → Environment Variables:
+- NEXT_PUBLIC_API_URL = https://technocus-production.up.railway.app
+
+### ❗ Railway'de Yapılması Gereken (Manuel)
+Railway Dashboard → Variables:
+- FRONTEND_URL = https://technocus.vercel.app
 
 ## Çalıştırma (Lokal)
 
@@ -51,54 +58,50 @@ docker compose down         # durdur
 
 ## Mevcut Durum
 
-### ✅ Çalışan / Hazır
-- Docker Compose yapılandırması sağlam
-- Tüm .env değerleri tanımlı (Cloudinary, iyzico, DB)
-- Backend self-healing: main.py eksik kolonları otomatik ekler
-- iyzico sandbox entegrasyonu kurulu
-- Cloudinary entegrasyonu kurulu
-- Admin paneli sayfaları mevcut
-- Backend ve Database Railway'de canlı
-- Frontend Vercel'de canlı
+### ✅ Tamamlanan Görevler
+- CORS ayarı: localhost:3000, Vercel URL, Railway URL hepsi eklendi
+- API bağlantısı: api.ts SSR/client ayrımı kaldırıldı, NEXT_PUBLIC_API_URL kullanılıyor
+- Seed users: admin@technocus.com + test@technocus.com startup'ta otomatik oluşturuluyor
+- 401 analizi: Backend login çalışıyor (form-data ile), frontend doğru gönderiyor
+- Register endpoint çalışıyor (test@test.com başarıyla oluşturuldu)
+- Health endpoint çalışıyor
 
-### ❌ Kritik Buglar
-- Müşteri login/register 401 hatası — ÇÖZÜLMEDEN DEVAM ETMEYİN
-- Frontend'de NEXT_PUBLIC_API_URL henüz set edilmemiş
-- FRONTEND_URL env değişkeni CORS'a eklenmemiş
-- Alembic Railway'de devre dışı
+### ⚠️ Kullanıcının Yapması Gereken
+- Vercel'e NEXT_PUBLIC_API_URL env variable eklenecek (yukarıya bak)
+- Railway'e FRONTEND_URL env variable eklenecek (yukarıya bak)
+- Her iki platformda redeploy tetiklenecek
 
 ### ⏳ Bekleyen Görevler (öncelik sırasıyla)
-1. [AKTİF] Railway URL → Vercel NEXT_PUBLIC_API_URL ve CORS ayarı
-2. [AKTİF] Giriş sistemi 401 hatası çözülecek
-3. [AKTİF] Admin hesabı + test müşteri hesabı oluşturulacak
-4. [AKTİF] Sepete ekleme akışı eksiksiz çalışacak
-5. [AKTİF] Satın alma akışı (iyzico) uçtan uca çalışacak
-6. [AKTİF] Her ürüne ayrı Cloudinary fotoğrafı eklenecek
-7. Alembic migration Railway'de aktif edilecek
-8. n8n workflow'ları kurulacak
+1. [BEKLEYEN] Vercel + Railway env variables set edilecek → kullanıcı yapacak
+2. [AKTİF] E2E login testi — env'ler set edildikten sonra Vercel üzerinden test
+3. [AKTİF] Sepete ekleme akışı eksiksiz çalışacak
+4. [AKTİF] Satın alma akışı (iyzico) uçtan uca çalışacak
+5. [AKTİF] Her ürüne ayrı Cloudinary fotoğrafı eklenecek
+6. n8n workflow'ları kurulacak
 
 ## Test Hesapları
 
 ### Admin
 - URL: /admin/login
 - Email: admin@technocus.com
-- Şifre: .env → ADMIN_PASSWORD
+- Şifre: Admin1234!
+- Startup'ta otomatik oluşturuluyor/güncelleniyor
 
 ### Müşteri (Test)
 - URL: /login
 - Email: test@technocus.com
 - Şifre: Test1234!
-
-Her iki hesap da migration/seed script ile otomatik oluşturulacak.
+- Startup'ta otomatik oluşturuluyor/güncelleniyor
 
 ## Giriş & Satın Alma Akışı — Kritik Gereksinimler
 
 Bu 3 akış eksiksiz çalışmadan başka hiçbir şeye geçilmez:
 
 1. GİRİŞ
-   - /login → JWT token alınır → httpOnly cookie'ye yazılır
+   - /login → JWT token alınır → localStorage'a yazılır
    - /register → hesap oluşturulur → otomatik login olunur
-   - 401 hatası tamamen ortadan kalkar
+   - Backend OAuth2PasswordRequestForm kullanıyor = form-data (username+password)
+   - Frontend doğru gönderiyor: URLSearchParams ile form-urlencoded
 
 2. SEPET
    - Giriş yapmadan sepete eklenebilir (guest cart)
@@ -129,11 +132,10 @@ Gerçek değerler .env dosyasında (GitHub'a gitmez).
 
 - DATABASE_URL          ✅ Railway'de tanımlı
 - SECRET_KEY            ✅ Tanımlı
-- CLOUDINARY_CLOUD_NAME / API_KEY / API_SECRET  ✅ Tanımlı
-- IYZICO_API_KEY / SECRET_KEY / BASE_URL        ✅ Tanımlı
-- FRONTEND_URL          ❌ CORS için Railway'e eklenecek
-- NEXT_PUBLIC_API_URL   ❌ Vercel'e eklenecek
-- ADMIN_PASSWORD        ❌ Seed script için eklenecek
+- CLOUDINARY_*          ✅ Tanımlı
+- IYZICO_*              ✅ Tanımlı (sandbox)
+- FRONTEND_URL          ❌ Railway'e eklenecek = https://technocus.vercel.app
+- NEXT_PUBLIC_API_URL   ❌ Vercel'e eklenecek = https://technocus-production.up.railway.app
 
 ## Sayfalar
 
@@ -154,13 +156,13 @@ Gerçek değerler .env dosyasında (GitHub'a gitmez).
 /admin/stock, /admin/campaigns, /admin/reports
 /admin/settings, /admin/integrations, /admin/workflows
 
-## Kritik Teknik Notlar
+## Teknik Mimari Notları
 - Backend self-healing: main.py başlangıçta eksik kolonları otomatik ekler
-- CORS: localhost:3000 + FRONTEND_URL env variable
-- next.config.mjs: ignoreDuringBuilds ve output standalone açık
+- CORS: localhost:3000 + technocus.vercel.app + Railway URL + FRONTEND_URL env
+- api.ts: NEXT_PUBLIC_API_URL kullanıyor (SSR/client fark etmez)
+- Auth: localStorage token + Bearer header (apiFetch otomatik ekler)
+- Auth state: Merkezi store YOK, her component localStorage'dan okur
 - iyzico test kartı: 5526080000000006, SKT: 12/26, CVV: 123
-- Alembic: lokalde aktif, Railway'de devre dışı — aktif edilecek
-- Son 6 commit sadece startup fix: deploy loop'ta takılındı
 
 ## Çalışma Yöntemi
 - Kagan, Antigravity adlı AI ajanı kullanıyor
