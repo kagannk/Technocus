@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { apiFetch } from '@/lib/api';
 
 export interface CartItem {
   id: number;
@@ -14,13 +15,17 @@ interface CartState {
   items: CartItem[];
   _hasHydrated: boolean;
   setHasHydrated: (state: boolean) => void;
-  addItem: (product: any, quantity: number) => void;
-  removeItem: (id: any) => void;
-  updateQuantity: (id: any, quantity: number) => void;
+  addItem: (product: any, quantity: number) => Promise<void>;
+  removeItem: (id: any) => Promise<void>;
+  updateQuantity: (id: any, quantity: number) => Promise<void>;
   clearCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
+  fetchCart: () => Promise<void>;
+  syncGuestCart: () => Promise<void>;
 }
+
+const hasToken = () => typeof window !== "undefined" ? !!localStorage.getItem("token") : false;
 
 export const useCartStore = create<CartState>()(
   persist(
@@ -30,58 +35,129 @@ export const useCartStore = create<CartState>()(
       
       setHasHydrated: (state) => set({ _hasHydrated: state }),
 
-      addItem: (product, quantity) => {
-        if (!product || !product.id) {
-          console.error('Invalid product for addItem:', product);
-          return;
+      fetchCart: async () => {
+        if (!hasToken()) return;
+        try {
+          const data = await apiFetch('/api/cart');
+          const mappedItems = data.map((item: any) => ({
+            id: item.id, // the cart_item id
+            productId: item.product.id,
+            name: item.product.name,
+            price: Number(item.product.price),
+            image: item.product.image_urls?.[0] || 'https://placehold.co/400x400/eaeff4/1b243b?text=Technocus',
+            quantity: item.quantity,
+            sku: item.product.sku || 'N/A',
+          }));
+          set({ items: mappedItems });
+        } catch (error) {
+          console.error("fetchCart error:", error);
         }
+      },
 
-        const productId = Number(product.id);
+      syncGuestCart: async () => {
         const { items } = get();
-        const existingItem = items.find((item) => Number(item.id) === productId);
+        if (items.length === 0 || !hasToken()) return;
 
-        console.log('Sepete eklenen ürün:', product, 'Adet:', quantity);
+        try {
+          // GUEST CART: items have id as productId.
+          // BACKEND CART: items have id as cartItemId and productId as product_id.
+          for (const item of items) {
+            // For guest cart items, id is the product_id. If it has productId, it's already a backend item.
+            const pid = (item as any).productId || item.id;
+            await apiFetch('/api/cart', {
+              method: 'POST',
+              body: JSON.stringify({ product_id: pid, quantity: item.quantity })
+            });
+          }
+          // After merging, fetch the fresh backend cart
+          await get().fetchCart();
+        } catch (error) {
+          console.error("syncGuestCart error:", error);
+        }
+      },
 
-        if (existingItem) {
+      addItem: async (product, quantity) => {
+        if (!product || !product.id) return;
+
+        if (hasToken()) {
+          try {
+            await apiFetch('/api/cart', {
+              method: 'POST',
+              body: JSON.stringify({ product_id: product.id, quantity })
+            });
+            await get().fetchCart();
+          } catch (error) {
+            console.error("addItem API error:", error);
+          }
+        } else {
+          // Guest Cart behavior
+          const productId = Number(product.id);
+          const { items } = get();
+          const existingItem = items.find((item) => Number(item.id) === productId);
+
+          if (existingItem) {
+            set({
+              items: items.map((item) =>
+                Number(item.id) === productId
+                  ? { ...item, quantity: item.quantity + quantity }
+                  : item
+              ),
+            });
+          } else {
+            set({
+              items: [
+                ...items,
+                {
+                  id: productId,
+                  name: product.name,
+                  price: Number(product.price),
+                  image: product.image_urls?.[0] || product.image || 'https://placehold.co/400x400/eaeff4/1b243b?text=Technocus',
+                  quantity,
+                  sku: product.sku || 'N/A',
+                },
+              ],
+            });
+          }
+        }
+      },
+
+      removeItem: async (id) => {
+        if (hasToken()) {
+          try {
+            await apiFetch(`/api/cart/${id}`, { method: 'DELETE' });
+            await get().fetchCart();
+          } catch (error) {
+            console.error("removeItem API error:", error);
+          }
+        } else {
+          const targetId = Number(id);
           set({
-            items: items.map((item) =>
-              Number(item.id) === productId
-                ? { ...item, quantity: item.quantity + quantity }
-                : item
+            items: get().items.filter((item) => Number(item.id) !== targetId),
+          });
+        }
+      },
+
+      updateQuantity: async (id, quantity) => {
+        if (quantity < 1) return;
+        
+        if (hasToken()) {
+          try {
+            await apiFetch(`/api/cart/${id}`, {
+              method: 'PUT',
+              body: JSON.stringify({ quantity })
+            });
+            await get().fetchCart();
+          } catch (error) {
+            console.error("updateQuantity API error:", error);
+          }
+        } else {
+          const targetId = Number(id);
+          set({
+            items: get().items.map((item) =>
+              Number(item.id) === targetId ? { ...item, quantity } : item
             ),
           });
-        } else {
-          set({
-            items: [
-              ...items,
-              {
-                id: productId,
-                name: product.name,
-                price: Number(product.price),
-                image: product.image_urls?.[0] || product.image || 'https://placehold.co/400x400/eaeff4/1b243b?text=Technocus',
-                quantity,
-                sku: product.sku || 'N/A',
-              },
-            ],
-          });
         }
-      },
-
-      removeItem: (id) => {
-        const targetId = Number(id);
-        set({
-          items: get().items.filter((item) => Number(item.id) !== targetId),
-        });
-      },
-
-      updateQuantity: (id, quantity) => {
-        if (quantity < 1) return;
-        const targetId = Number(id);
-        set({
-          items: get().items.map((item) =>
-            Number(item.id) === targetId ? { ...item, quantity } : item
-          ),
-        });
       },
 
       clearCart: () => set({ items: [] }),
@@ -104,6 +180,10 @@ export const useCartStore = create<CartState>()(
         return (state, error) => {
           if (!error && state) {
             state.setHasHydrated(true);
+            if (hasToken()) {
+              // Try to sync on load if logged in (in case there's a delay)
+              state.fetchCart();
+            }
           }
         };
       },

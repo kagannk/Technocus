@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { apiFetch } from '@/lib/api';
 import toast from 'react-hot-toast';
+import { useCartStore } from '@/store/useCartStore';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -30,6 +31,13 @@ export default function LoginPage() {
       localStorage.setItem('token', data.access_token);
       localStorage.setItem('user_name', data.full_name || 'Kullanıcı');
       if (data.is_admin) localStorage.setItem('role', 'admin');
+      
+      // Guest Cart Merge
+      try {
+        await useCartStore.getState().syncGuestCart();
+      } catch (err) {
+        console.error("Cart merge error:", err);
+      }
       
       toast.success('Başarıyla giriş yaptınız!');
       

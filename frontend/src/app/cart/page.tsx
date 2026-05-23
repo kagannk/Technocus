@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useCartStore } from '@/store/useCartStore';
 
 export default function CartPage() {
-  const { items, removeItem, updateQuantity, getTotalPrice } = useCartStore();
+  const { items, removeItem, updateQuantity, getTotalPrice, _hasHydrated } = useCartStore();
   const cartTotal = getTotalPrice();
   const router = useRouter();
   
@@ -14,6 +14,10 @@ export default function CartPage() {
       router.push('/checkout');
     }
   };
+
+  if (!_hasHydrated) {
+    return <div className="py-20 text-center text-slate-400">Sepet yükleniyor...</div>;
+  }
 
   if (items.length === 0) {
     return (
