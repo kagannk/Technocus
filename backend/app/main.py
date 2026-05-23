@@ -198,28 +198,26 @@ async def startup_event():
             await db.commit()
             logger.info("[SEED] ✅ Kategori ve ürün seed tamamlandı.")
             
-            # Ürünleri kategorilere eşleştirme
-            await db.execute(text("""
-                UPDATE products 
-                SET category_id = (SELECT id FROM categories WHERE slug = 'drone') 
-                WHERE LOWER(name) LIKE '%drone%' OR LOWER(description) LIKE '%drone%'
-            """))
-            await db.execute(text("""
-                UPDATE products 
-                SET category_id = (SELECT id FROM categories WHERE slug = 'elektronik') 
-                WHERE LOWER(name) LIKE '%arduino%' OR LOWER(description) LIKE '%arduino%'
-                OR LOWER(name) LIKE '%raspberry%' OR LOWER(description) LIKE '%raspberry%'
-                OR LOWER(name) LIKE '%elektronik%' OR LOWER(description) LIKE '%elektronik%'
-            """))
-            await db.execute(text("""
-                UPDATE products 
-                SET category_id = (SELECT id FROM categories WHERE slug = 'robotik') 
-                WHERE LOWER(name) LIKE '%robot%' OR LOWER(description) LIKE '%robot%'
-                OR LOWER(name) LIKE '%servo%' OR LOWER(description) LIKE '%servo%'
-                OR LOWER(name) LIKE '%motor%' OR LOWER(description) LIKE '%motor%'
-            """))
-            await db.commit()
-            logger.info("[SEED] ✅ Ürün kategorileri DB üzerinde eşleştirildi.")
+            # Ürünleri kategorilere eşleştirme (Python tabanlı gelişmiş filtre)
+            drone_id = (await db.execute(text("SELECT id FROM categories WHERE slug='drone'"))).scalar()
+            elek_id = (await db.execute(text("SELECT id FROM categories WHERE slug='elektronik'"))).scalar()
+            robot_id = (await db.execute(text("SELECT id FROM categories WHERE slug='robotik'"))).scalar()
+            
+            if drone_id and elek_id and robot_id:
+                products = (await db.execute(text('SELECT id, name FROM products'))).fetchall()
+                for product_id, name in products:
+                    name_lower = str(name).lower()
+                    if any(w in name_lower for w in ['drone', 'quadcopter', 'fpv', 'uav', 'dji', 'propeller', 'perde', 'uçuş']):
+                        cat_id = drone_id
+                    elif any(w in name_lower for w in ['robot', 'servo', 'motor', 'arm', 'kol', 'manipulator', 'humanoid']):
+                        cat_id = robot_id
+                    else:
+                        cat_id = elek_id  
+                    
+                    await db.execute(text(f'UPDATE products SET category_id = {cat_id} WHERE id = {product_id}'))
+                
+                await db.commit()
+                logger.info("[SEED] ✅ Ürün kategorileri DB üzerinde eşleştirildi.")
             
     except Exception as e:
         logger.error(f"[SEED] Hata: {e}")
