@@ -68,6 +68,9 @@ docker compose down         # durdur
 - Giriş ve Register sistemi ✅ Tamamlandı (Ad/soyad, auto-login, navbar güncellemesi)
 - Siparişler kullanıcıya özel ✅
 - Sepet kullanıcıya özel ✅
+- Sepete ekleme akışı → ✅ Tamamlandı
+- Kategori sayfaları → ✅ Tamamlandı
+- Siparişler gerçek API → ✅ Tamamlandı
 
 ### ⚠️ Kullanıcının Yapması Gereken
 - Vercel'e NEXT_PUBLIC_API_URL env variable eklenecek (yukarıya bak)
@@ -75,10 +78,9 @@ docker compose down         # durdur
 - Her iki platformda redeploy tetiklenecek
 
 ### ⏳ Bekleyen Görevler (öncelik sırasıyla)
-1. [AKTİF] Sepete ekleme + satın alma akışı
-2. [BEKLEYEN] Satın alma akışı (iyzico) uçtan uca çalışacak
-3. [BEKLEYEN] Her ürüne ayrı Cloudinary fotoğrafı eklenecek
-4. n8n workflow'ları kurulacak
+1. [AKTİF] Satın alma akışı (iyzico) uçtan uca çalışacak
+2. [BEKLEYEN] Her ürüne ayrı Cloudinary fotoğrafı eklenecek
+3. n8n workflow'ları kurulacak
 
 ## Test Hesapları
 

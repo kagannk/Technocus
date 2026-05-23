@@ -24,7 +24,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
   useEffect(() => {
     async function loadProducts() {
       try {
-        const data = await apiFetch(`/api/products?category=${slug}`);
+        const data = await apiFetch(`/api/products/?category=${slug}`);
         setProducts(data);
       } catch (e) {
         console.error("Kategori yüklenemedi:", e);
