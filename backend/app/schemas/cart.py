@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 import datetime
-from app.schemas.product import Product
+from app.schemas.product import ProductResponse
 
 class CartItemBase(BaseModel):
     product_id: int
@@ -17,7 +17,7 @@ class CartItemResponse(CartItemBase):
     id: int
     user_id: int
     created_at: datetime.datetime
-    product: Optional[Product] = None
+    product: Optional[ProductResponse] = None
     
     class Config:
         from_attributes = True
