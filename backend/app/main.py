@@ -6,12 +6,13 @@ import logging
 import os
 from sqlalchemy.exc import ProgrammingError, OperationalError
 
-from app.api.endpoints import auth, categories, products, orders, upload, admin, campaigns, customers, settings
+from app.api.endpoints import auth, categories, products, orders, upload, admin, campaigns, customers, settings, cart
 from app.core.database import AsyncSessionLocal, engine
 from app.core.security import get_password_hash
 from app.models.user import User
 from app.models.category import Category
 from app.models.product import Product
+from app.models.cart import CartItem
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -78,11 +79,25 @@ SEED_PRODUCTS = [
     {"sku":"ROB-ENC-500","name":"Optik Enkoder Modülü 500PPR","slug":"optik-enkoder-500ppr","description":"Motor hız ve pozisyon geri bildirimi için 500PPR fotoelektrik enkoder. Şaft adaptörü dahil.","price":149.90,"stock":95,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1518770660439-4636190af475?w=600"],"spec_data":{"PPR":"500","Çıkış":"A/B TTL"}},
 ]
 
+from app.models.base import Base
+
 @app.on_event("startup")
 async def startup_event():
     # Step 1: Auto-migrate any missing columns before ORM queries
     try:
         async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+            logger.info("[MIGRATION] Tables created/verified.")
+            
+            # Temizlik (Orphaned items)
+            try:
+                await conn.execute(text("DELETE FROM order_items WHERE order_id IN (SELECT id FROM orders WHERE user_id IS NULL)"))
+                await conn.execute(text("DELETE FROM orders WHERE user_id IS NULL"))
+                await conn.execute(text("DELETE FROM cart_items WHERE user_id IS NULL OR user_id NOT IN (SELECT id FROM users)"))
+                logger.info("[MIGRATION] Orphaned test data cleaned.")
+            except Exception as e:
+                logger.warning(f"[MIGRATION] Temizlik hatası: {e}")
+                
             for sql in SAFE_MIGRATIONS:
                 try:
                     await conn.execute(text(sql))
@@ -186,10 +201,12 @@ async def startup_event():
         logger.error(f"[SEED] Hata: {e}")
 
 
+
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(categories.router, prefix="/api/categories", tags=["categories"])
 app.include_router(products.router, prefix="/api/products", tags=["products"])
 app.include_router(orders.router, prefix="/api/orders", tags=["orders"])
+app.include_router(cart.router, prefix="/api/cart", tags=["cart"])
 app.include_router(upload.router, prefix="/api/upload", tags=["upload"])
 app.include_router(admin.router, prefix="/api/admin", tags=["admin"])
 app.include_router(campaigns.router, prefix="/api/campaigns", tags=["campaigns"])

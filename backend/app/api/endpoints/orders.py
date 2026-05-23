@@ -190,7 +190,8 @@ async def iyzico_callback(token: str = Form(...), db: AsyncSession = Depends(get
             
     return RedirectResponse(url=f"{frontend_url}/cart?error=payment_failed", status_code=303)
 
-@router.get("/my-orders", response_model=List[OrderResponse])
+@router.get("", response_model=List[OrderResponse])
+@router.get("/", response_model=List[OrderResponse], include_in_schema=False)
 async def get_my_orders(db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
     result = await db.execute(
         select(Order)
