@@ -9,7 +9,8 @@ import toast from 'react-hot-toast';
 export default function RegisterPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({ 
-    full_name: '', 
+    first_name: '', 
+    last_name: '',
     email: '', 
     password: '',
     confirm_password: ''
@@ -27,17 +28,25 @@ export default function RegisterPage() {
     setLoading(true);
     
     try {
-      await apiFetch('/api/auth/register', {
+      const data = await apiFetch('/api/auth/register', {
         method: 'POST',
         body: JSON.stringify({
           email: formData.email.toLowerCase(),
           password: formData.password,
-          full_name: formData.full_name
+          first_name: formData.first_name,
+          last_name: formData.last_name
         })
       });
 
-      toast.success('Kayıt başarılı! Lütfen giriş yapın.');
-      router.push('/login');
+      // Kayıt başarılı, JWT token dönüyor
+      localStorage.setItem('token', data.access_token);
+      localStorage.setItem('user_name', data.full_name || 'Kullanıcı');
+      if (data.is_admin) localStorage.setItem('role', 'admin');
+
+      toast.success('Kayıt başarılı! Yönlendiriliyorsunuz...');
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 500);
 
     } catch (err: any) {
       toast.error(err.message || 'Kayıt olurken bir hata meydana geldi.');
@@ -60,16 +69,29 @@ export default function RegisterPage() {
           </div>
 
           <form onSubmit={handleRegister} className="space-y-5">
-            <div>
-              <label className="block text-sm font-semibold text-slate-300 mb-2">Ad Soyad</label>
-              <input 
-                type="text"
-                required
-                className="w-full bg-navy-900 border border-navy-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-electric-default focus:ring-1 focus:ring-electric-default transition-all shadow-inner"
-                placeholder="Örn: Yılmaz Kağan"
-                value={formData.full_name}
-                onChange={(e) => setFormData({...formData, full_name: e.target.value})}
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+               <div>
+                  <label className="block text-sm font-semibold text-slate-300 mb-2">Ad</label>
+                  <input 
+                    type="text"
+                    required
+                    className="w-full bg-navy-900 border border-navy-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-electric-default focus:ring-1 focus:ring-electric-default transition-all shadow-inner"
+                    placeholder="Örn: Yılmaz"
+                    value={formData.first_name}
+                    onChange={(e) => setFormData({...formData, first_name: e.target.value})}
+                  />
+               </div>
+               <div>
+                  <label className="block text-sm font-semibold text-slate-300 mb-2">Soyad</label>
+                  <input 
+                    type="text"
+                    required
+                    className="w-full bg-navy-900 border border-navy-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-electric-default focus:ring-1 focus:ring-electric-default transition-all shadow-inner"
+                    placeholder="Örn: Kağan"
+                    value={formData.last_name}
+                    onChange={(e) => setFormData({...formData, last_name: e.target.value})}
+                  />
+               </div>
             </div>
 
             <div>

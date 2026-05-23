@@ -12,7 +12,7 @@ from app.api.deps import get_current_user
 
 router = APIRouter()
 
-@router.post("/register", response_model=UserResponse)
+@router.post("/register", response_model=Token)
 async def register(user_in: UserCreate, db: AsyncSession = Depends(get_db)):
     user_email = user_in.email.lower()
     result = await db.execute(select(User).where(User.email == user_email))
@@ -20,15 +20,25 @@ async def register(user_in: UserCreate, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
         
     hashed_password = get_password_hash(user_in.password)
+    full_name = f"{user_in.first_name} {user_in.last_name}".strip()
     user = User(
         email=user_email,
         hashed_password=hashed_password,
-        full_name=user_in.full_name
+        first_name=user_in.first_name,
+        last_name=user_in.last_name,
+        full_name=full_name
     )
     db.add(user)
     await db.commit()
     await db.refresh(user)
-    return user
+    
+    access_token = create_access_token(subject=user.id)
+    return {
+        "access_token": access_token, 
+        "token_type": "bearer",
+        "full_name": user.full_name,
+        "is_admin": user.is_admin
+    }
 
 @router.post("/login", response_model=Token)
 async def login(

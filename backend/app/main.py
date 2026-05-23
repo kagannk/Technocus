@@ -41,6 +41,8 @@ app.add_middleware(
 # ── Self-healing migrations ───────────────────────────────────────────────────
 SAFE_MIGRATIONS = [
     "ALTER TABLE users ADD COLUMN IF NOT EXISTS iyzico_card_user_key VARCHAR(255)",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS first_name VARCHAR(255)",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS last_name VARCHAR(255)",
     "ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking_number VARCHAR(255)",
     "ALTER TABLE orders ADD COLUMN IF NOT EXISTS total_amount FLOAT DEFAULT 0",
     "ALTER TABLE orders ADD COLUMN IF NOT EXISTS status VARCHAR(50) DEFAULT 'pending'",

@@ -65,7 +65,7 @@ docker compose down         # durdur
 - 401 analizi: Backend login çalışıyor (form-data ile), frontend doğru gönderiyor
 - Register endpoint çalışıyor (test@test.com başarıyla oluşturuldu)
 - Health endpoint çalışıyor
-- Giriş sistemi ✅ Tamamlandı
+- Giriş ve Register sistemi ✅ Tamamlandı (Ad/soyad, auto-login, navbar güncellemesi)
 
 ### ⚠️ Kullanıcının Yapması Gereken
 - Vercel'e NEXT_PUBLIC_API_URL env variable eklenecek (yukarıya bak)

@@ -36,6 +36,28 @@ export default function Navbar() {
     if (token) {
       setIsAuthenticated(true);
       setUserName(localStorage.getItem('user_name') || 'Hesabım');
+      
+      // Fetch fresh user data
+      apiFetch('/api/auth/me')
+        .then(user => {
+          if (user.full_name) {
+            setUserName(user.full_name);
+            localStorage.setItem('user_name', user.full_name);
+          }
+          if (user.is_admin) {
+            localStorage.setItem('role', 'admin');
+          }
+        })
+        .catch(err => {
+          console.error("Auth check failed:", err);
+          // If token is invalid/expired, log them out
+          if (err.message && err.message.includes("401")) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('role');
+            setIsAuthenticated(false);
+          }
+        });
     }
 
     // Click outside search
