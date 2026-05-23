@@ -65,6 +65,7 @@ docker compose down         # durdur
 - 401 analizi: Backend login çalışıyor (form-data ile), frontend doğru gönderiyor
 - Register endpoint çalışıyor (test@test.com başarıyla oluşturuldu)
 - Health endpoint çalışıyor
+- Giriş sistemi ✅ Tamamlandı
 
 ### ⚠️ Kullanıcının Yapması Gereken
 - Vercel'e NEXT_PUBLIC_API_URL env variable eklenecek (yukarıya bak)
@@ -72,12 +73,10 @@ docker compose down         # durdur
 - Her iki platformda redeploy tetiklenecek
 
 ### ⏳ Bekleyen Görevler (öncelik sırasıyla)
-1. [BEKLEYEN] Vercel + Railway env variables set edilecek → kullanıcı yapacak
-2. [AKTİF] E2E login testi — env'ler set edildikten sonra Vercel üzerinden test
-3. [AKTİF] Sepete ekleme akışı eksiksiz çalışacak
-4. [AKTİF] Satın alma akışı (iyzico) uçtan uca çalışacak
-5. [AKTİF] Her ürüne ayrı Cloudinary fotoğrafı eklenecek
-6. n8n workflow'ları kurulacak
+1. [AKTİF] Sepete ekleme akışı eksiksiz çalışacak
+2. [BEKLEYEN] Satın alma akışı (iyzico) uçtan uca çalışacak
+3. [BEKLEYEN] Her ürüne ayrı Cloudinary fotoğrafı eklenecek
+4. n8n workflow'ları kurulacak
 
 ## Test Hesapları
 
