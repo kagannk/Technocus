@@ -218,6 +218,75 @@ async def startup_event():
                 
                 await db.commit()
                 logger.info("[SEED] ✅ Ürün kategorileri DB üzerinde eşleştirildi.")
+                
+            # --- Cloudinary Gerçek Ürün Görselleri Eşleştirmesi ---
+            import cloudinary
+            import cloudinary.uploader
+            from app.core.config import settings
+            import asyncio
+            
+            cloudinary.config(
+                cloud_name=settings.CLOUDINARY_CLOUD_NAME,
+                api_key=settings.CLOUDINARY_API_KEY,
+                api_secret=settings.CLOUDINARY_API_SECRET
+            )
+            
+            products_for_img = (await db.execute(text('SELECT id, name, image_urls FROM products'))).fetchall()
+            for product_id, name, image_urls in products_for_img:
+                needs_update = False
+                if not image_urls:
+                    needs_update = True
+                elif isinstance(image_urls, list) and len(image_urls) > 0:
+                    if 'res.cloudinary.com' not in image_urls[0]:
+                        needs_update = True
+                
+                if needs_update:
+                    name_lower = str(name).lower()
+                    image_url = None
+                    
+                    if 'dji' in name_lower or 'mini' in name_lower:
+                        image_url = 'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800'
+                    elif 'fpv' in name_lower or 'racing' in name_lower:
+                        image_url = 'https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=800'
+                    elif 'drone' in name_lower or 'quadcopter' in name_lower:
+                        image_url = 'https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=800'
+                    elif 'arduino' in name_lower:
+                        image_url = 'https://images.unsplash.com/photo-1553406830-ef2513450d76?w=800'
+                    elif 'raspberry' in name_lower:
+                        image_url = 'https://images.unsplash.com/photo-1580584126903-c17d41830450?w=800'
+                    elif 'sensör' in name_lower or 'sensor' in name_lower:
+                        image_url = 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'
+                    elif 'kamera' in name_lower or 'camera' in name_lower:
+                        image_url = 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800'
+                    elif 'batarya' in name_lower or 'battery' in name_lower or 'lipo' in name_lower:
+                        image_url = 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800'
+                    elif 'motor' in name_lower and 'robot' not in name_lower:
+                        image_url = 'https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800'
+                    elif 'robot' in name_lower or 'servo' in name_lower:
+                        image_url = 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800'
+                    elif 'manipulator' in name_lower or 'kol' in name_lower or 'arm' in name_lower:
+                        image_url = 'https://images.unsplash.com/photo-1561144257-e32e8506e4b6?w=800'
+                    
+                    if image_url:
+                        try:
+                            def upload_sync():
+                                return cloudinary.uploader.upload(
+                                    image_url,
+                                    public_id=f'products/product_{product_id}',
+                                    overwrite=True,
+                                    transformation=[
+                                        {'width': 800, 'height': 800, 'crop': 'fill', 'gravity': 'auto'},
+                                        {'quality': 'auto', 'fetch_format': 'auto'}
+                                    ]
+                                )
+                            result = await asyncio.to_thread(upload_sync)
+                            cloudinary_url = result['secure_url']
+                            await db.execute(text("UPDATE products SET image_urls = ARRAY[:url] WHERE id = :id"), {"url": cloudinary_url, "id": product_id})
+                            logger.info(f"[CLOUDINARY] ✅ {name} yüklendi: {cloudinary_url}")
+                        except Exception as e:
+                            logger.error(f"[CLOUDINARY] ❌ {name} yüklenemedi: {e}")
+            await db.commit()
+            logger.info("[SEED] ✅ Tüm Cloudinary ürün görselleri güncellendi.")
             
     except Exception as e:
         logger.error(f"[SEED] Hata: {e}")
