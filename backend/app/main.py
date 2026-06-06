@@ -57,26 +57,26 @@ SEED_CATEGORIES = [
 ]
 
 SEED_PRODUCTS = [
-    {"sku":"DRN-BLM-2306","name":"FPV Brushless Motor 2306 2400KV","slug":"fpv-brushless-motor-2306-2400kv","description":"Yarış drone'ları için yüksek devirli 2306 2400KV brushless motor. 4S-6S LiPo uyumlu, çift paket.","price":349.90,"stock":85,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=600"],"spec_data":{"KV":"2400","Boyut":"2306","Gerilim":"4S-6S"}},
-    {"sku":"DRN-ESC-45A","name":"BLHeli_S 45A 4-in-1 ESC","slug":"blheli-s-45a-4in1-esc","description":"4-in-1 BLHeli_S 45A ESC. Dshot600 desteği ile FPV drone yarış ve freestyle için.","price":529.00,"stock":42,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1604754742629-3e5728249d73?w=600"],"spec_data":{"Akım":"45A","Protokol":"Dshot600"}},
-    {"sku":"DRN-FC-F7","name":"Speedybee F7 V3 Uçuş Kontrolcüsü","slug":"speedybee-f7-v3-ucus-kontrolcusu","description":"STM32F7 tabanlı Betaflight uyumlu uçuş kontrolcüsü. Dahili Bluetooth ve WiFi.","price":899.00,"stock":28,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1579829366248-204fe8413f31?w=600"],"spec_data":{"İşlemci":"STM32F7","Gyro":"ICM-42688P"}},
-    {"sku":"DRN-LIPO-4S","name":"LiPo Batarya 4S 1500mAh 100C","slug":"lipo-batarya-4s-1500mah-100c","description":"FPV yarış drone'ları için yüksek deşarjlı 4S 1500mAh LiPo batarya. XT60 konektör dahil.","price":279.00,"stock":120,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1598300188904-6287d98bdab0?w=600"],"spec_data":{"Hücre":"4S","Kapasite":"1500mAh","Deşarj":"100C"}},
-    {"sku":"DRN-VTX-5G","name":"5.8GHz 25-800mW Video Verici","slug":"5ghz-video-verici-800mw","description":"FPV video iletimi için 5.8GHz ayarlı verici. Pit mode desteği, 40 kanal.","price":439.00,"stock":55,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1551808525-51a94da548ce?w=600"],"spec_data":{"Frekans":"5.8GHz","Güç":"800mW maks"}},
-    {"sku":"DRN-FRAME-5IN","name":"Apex 5 inç FPV Karbon Çerçeve","slug":"apex-5-inc-fpv-cerceve","description":"3K karbon fiber True-X 5 inç FPV drone çerçevesi. 5mm alt plaka.","price":389.00,"stock":35,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=600"],"spec_data":{"Pervane":"5 inç","Malzeme":"3K Karbon Fiber"}},
-    {"sku":"ELK-ARD-UNO","name":"Arduino Uno R3 Geliştirme Kartı","slug":"arduino-uno-r3","description":"ATmega328P tabanlı Arduino Uno R3. Başlangıç ve proto projekter için ideal, USB-B kablo dahil.","price":249.90,"stock":200,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1608564697071-ddf911d81370?w=600"],"spec_data":{"İşlemci":"ATmega328P","Flash":"32KB"}},
-    {"sku":"ELK-RPI-5","name":"Raspberry Pi 5 (4GB RAM)","slug":"raspberry-pi-5-4gb","description":"Quad-Core Cortex-A76 2.4GHz ve 4GB LPDDR4X RAM. PCIe 2.0, dual 4K HDMI.","price":1849.00,"stock":30,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600"],"spec_data":{"İşlemci":"Cortex-A76 2.4GHz","RAM":"4GB"}},
-    {"sku":"ELK-LIDAR-TF","name":"TF-Luna LiDAR Menzil Sensörü","slug":"tf-luna-lidar-sensoru","description":"8m menzile kadar cm hassasiyetli TOF LiDAR. UART/I2C, drone engel tanıma için.","price":319.00,"stock":65,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?w=600"],"spec_data":{"Menzil":"0.2-8m","Frekans":"250Hz"}},
-    {"sku":"ELK-IMU-MPU","name":"MPU-6050 6-Eksen IMU Modülü","slug":"mpu-6050-imu-modulu","description":"3 eksen ivme + 3 eksen gyro I2C IMU modülü. Denge robotu ve uçuş kontrol için.","price":49.90,"stock":350,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1518770660439-4636190af475?w=600"],"spec_data":{"Eksen":"6 DOF","Arayüz":"I2C"}},
-    {"sku":"ELK-ESP32-W","name":"ESP32-WROOM-32 WiFi+BT Modülü","slug":"esp32-wroom-32-wifi-bt","description":"Dual-Core 240MHz ESP32, WiFi 802.11 b/g/n ve Bluetooth 4.2/BLE dahil IoT modülü.","price":89.90,"stock":280,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600"],"spec_data":{"İşlemci":"240MHz dual","Kablosuz":"WiFi+BT"}},
-    {"sku":"ELK-OLED-96","name":"0.96\" OLED Ekran Modülü I2C","slug":"oled-ekran-096-i2c","description":"128x64 piksel SSD1306 sürücülü OLED ekran. Arduino, ESP32, Raspberry Pi uyumlu.","price":59.90,"stock":400,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=600"],"spec_data":{"Çözünürlük":"128x64","Sürücü":"SSD1306"}},
-    {"sku":"ELK-BREAD-830","name":"830 Noktalı Breadboard","slug":"830-nokta-breadboard","description":"Prototip devreler için 830 delikli tam boyut breadboard. 4 güç rayı, 63 sütun.","price":34.90,"stock":500,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1553406830-ef2513450d76?w=600"],"spec_data":{"Delik Sayısı":"830","Rail":"4 güç rayı"}},
-    {"sku":"ROB-SERVO-MG996","name":"MG996R Metal Dişlili Servo Motor","slug":"mg996r-servo-motor","description":"11kg.cm tork kapasiteli metal dişlili dijital servo. Robot kolu ve gimbal için ideal.","price":119.90,"stock":180,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600"],"spec_data":{"Tork":"11kg.cm","Dişli":"Metal"}},
-    {"sku":"ROB-KIT-4WD","name":"4WD Akıllı Robot Araba Kiti","slug":"4wd-akilli-robot-araba-kiti","description":"Arduino uyumlu 4 tekerlekli robot araba platformu. Motor, sürücü, sensör dahil.","price":449.00,"stock":45,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1561144257-e32e8506ae3e?w=600"],"spec_data":{"Tekerlek":"4WD","Sensör":"HC-SR04"}},
-    {"sku":"ROB-ARM-6DOF","name":"6 Eksenli Alüminyum Robot Kolu","slug":"6-eksenli-robot-kolu","description":"6 DOF alüminyum robot kolu, MG996R x6 servo dahil. Arduino/ROS uyumlu.","price":1249.00,"stock":18,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1589254065878-42c9da997008?w=600"],"spec_data":{"DOF":"6","Kapasite":"500g"}},
-    {"sku":"ROB-STEP-NEMA17","name":"NEMA 17 Step Motor 42x40mm","slug":"nema-17-step-motor-42x40","description":"1.8°/adım NEMA17 step motor. 3D yazıcı ve CNC projeleri için 45N.cm tork.","price":189.90,"stock":140,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1608292772253-53d1e793a9a7?w=600"],"spec_data":{"Adım":"1.8°","Tork":"45N.cm"}},
-    {"sku":"ROB-JETSON-N4","name":"NVIDIA Jetson Nano 4GB Developer Kit","slug":"nvidia-jetson-nano-4gb","description":"128-çekirdek Maxwell GPU, Quad-Core ARM A57 yapay zeka geliştirme kartı.","price":3499.00,"stock":12,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1620459137207-c6f7a7b54b43?w=600"],"spec_data":{"GPU":"128-core Maxwell","RAM":"4GB LPDDR4"}},
-    {"sku":"ROB-GRIPPER-SG","name":"Servo Kontrollü Robotik Gripper","slug":"servo-robotik-gripper","description":"Tek servo ile paralel mekanizmalı alüminyum robotik pençe. Arduino/ROS uyumlu.","price":329.00,"stock":60,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1535378620166-273708d44e4c?w=600"],"spec_data":{"Açılış":"0-80mm","Ağırlık":"120g"}},
-    {"sku":"ROB-ENC-500","name":"Optik Enkoder Modülü 500PPR","slug":"optik-enkoder-500ppr","description":"Motor hız ve pozisyon geri bildirimi için 500PPR fotoelektrik enkoder. Şaft adaptörü dahil.","price":149.90,"stock":95,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1518770660439-4636190af475?w=600"],"spec_data":{"PPR":"500","Çıkış":"A/B TTL"}},
+    {"sku":"DRN-BLM-2306","name":"FPV Brushless Motor 2306 2400KV","slug":"fpv-brushless-motor-2306-2400kv","description":"Yarış drone'ları için yüksek devirli 2306 2400KV brushless motor. 4S-6S LiPo uyumlu, çift paket.","price":349.90,"stock":85,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=800&q=80","https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=800&q=80"],"spec_data":{"KV":"2400","Boyut":"2306","Gerilim":"4S-6S"}},
+    {"sku":"DRN-ESC-45A","name":"BLHeli_S 45A 4-in-1 ESC","slug":"blheli-s-45a-4in1-esc","description":"4-in-1 BLHeli_S 45A ESC. Dshot600 desteği ile FPV drone yarış ve freestyle için.","price":529.00,"stock":42,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1604754742629-3e5728249d73?w=800&q=80","https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&q=80"],"spec_data":{"Akım":"45A","Protokol":"Dshot600"}},
+    {"sku":"DRN-FC-F7","name":"Speedybee F7 V3 Uçuş Kontrolcüsü","slug":"speedybee-f7-v3-ucus-kontrolcusu","description":"STM32F7 tabanlı Betaflight uyumlu uçuş kontrolcüsü. Dahili Bluetooth ve WiFi.","price":899.00,"stock":28,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1579829366248-204fe8413f31?w=800&q=80","https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800&q=80"],"spec_data":{"İşlemci":"STM32F7","Gyro":"ICM-42688P"}},
+    {"sku":"DRN-LIPO-4S","name":"LiPo Batarya 4S 1500mAh 100C","slug":"lipo-batarya-4s-1500mah-100c","description":"FPV yarış drone'ları için yüksek deşarjlı 4S 1500mAh LiPo batarya. XT60 konektör dahil.","price":279.00,"stock":120,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80","https://images.unsplash.com/photo-1496065187959-7f07b8353c55?w=800&q=80"],"spec_data":{"Hücre":"4S","Kapasite":"1500mAh","Deşarj":"100C"}},
+    {"sku":"DRN-VTX-5G","name":"5.8GHz 25-800mW Video Verici","slug":"5ghz-video-verici-800mw","description":"FPV video iletimi için 5.8GHz ayarlı verici. Pit mode desteği, 40 kanal.","price":439.00,"stock":55,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1551808525-51a94da548ce?w=800&q=80","https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80"],"spec_data":{"Frekans":"5.8GHz","Güç":"800mW maks"}},
+    {"sku":"DRN-FRAME-5IN","name":"Apex 5 inç FPV Karbon Çerçeve","slug":"apex-5-inc-fpv-cerceve","description":"3K karbon fiber True-X 5 inç FPV drone çerçevesi. 5mm alt plaka.","price":389.00,"stock":35,"cat":"drone","image_urls":["https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=800&q=80","https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=800&q=80"],"spec_data":{"Pervane":"5 inç","Malzeme":"3K Karbon Fiber"}},
+    {"sku":"ELK-ARD-UNO","name":"Arduino Uno R3 Geliştirme Kartı","slug":"arduino-uno-r3","description":"ATmega328P tabanlı Arduino Uno R3. Başlangıç ve proto projekter için ideal, USB-B kablo dahil.","price":249.90,"stock":200,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1608564697071-ddf911d81370?w=800&q=80","https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=800&q=80"],"spec_data":{"İşlemci":"ATmega328P","Flash":"32KB"}},
+    {"sku":"ELK-RPI-5","name":"Raspberry Pi 5 (4GB RAM)","slug":"raspberry-pi-5-4gb","description":"Quad-Core Cortex-A76 2.4GHz ve 4GB LPDDR4X RAM. PCIe 2.0, dual 4K HDMI.","price":1849.00,"stock":30,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&q=80","https://images.unsplash.com/photo-1526406915894-7bcd65f60845?w=800&q=80"],"spec_data":{"İşlemci":"Cortex-A76 2.4GHz","RAM":"4GB"}},
+    {"sku":"ELK-LIDAR-TF","name":"TF-Luna LiDAR Menzil Sensörü","slug":"tf-luna-lidar-sensoru","description":"8m menzile kadar cm hassasiyetli TOF LiDAR. UART/I2C, drone engel tanıma için.","price":319.00,"stock":65,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?w=800&q=80","https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80"],"spec_data":{"Menzil":"0.2-8m","Frekans":"250Hz"}},
+    {"sku":"ELK-IMU-MPU","name":"MPU-6050 6-Eksen IMU Modülü","slug":"mpu-6050-imu-modulu","description":"3 eksen ivme + 3 eksen gyro I2C IMU modülü. Denge robotu ve uçuş kontrol için.","price":49.90,"stock":350,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80","https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80"],"spec_data":{"Eksen":"6 DOF","Arayüz":"I2C"}},
+    {"sku":"ELK-ESP32-W","name":"ESP32-WROOM-32 WiFi+BT Modülü","slug":"esp32-wroom-32-wifi-bt","description":"Dual-Core 240MHz ESP32, WiFi 802.11 b/g/n ve Bluetooth 4.2/BLE dahil IoT modülü.","price":89.90,"stock":280,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800&q=80","https://images.unsplash.com/photo-1560732488-6b0df240254a?w=800&q=80"],"spec_data":{"İşlemci":"240MHz dual","Kablosuz":"WiFi+BT"}},
+    {"sku":"ELK-OLED-96","name":"0.96\" OLED Ekran Modülü I2C","slug":"oled-ekran-096-i2c","description":"128x64 piksel SSD1306 sürücülü OLED ekran. Arduino, ESP32, Raspberry Pi uyumlu.","price":59.90,"stock":400,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=800&q=80","https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&q=80"],"spec_data":{"Çözünürlük":"128x64","Sürücü":"SSD1306"}},
+    {"sku":"ELK-BREAD-830","name":"830 Noktalı Breadboard","slug":"830-nokta-breadboard","description":"Prototip devreler için 830 delikli tam boyut breadboard. 4 güç rayı, 63 sütun.","price":34.90,"stock":500,"cat":"elektronik","image_urls":["https://images.unsplash.com/photo-1553406830-ef2513450d76?w=800&q=80","https://images.unsplash.com/photo-1544256718-3bcf237f3974?w=800&q=80"],"spec_data":{"Delik Sayısı":"830","Rail":"4 güç rayı"}},
+    {"sku":"ROB-SERVO-MG996","name":"MG996R Metal Dişlili Servo Motor","slug":"mg996r-servo-motor","description":"11kg.cm tork kapasiteli metal dişlili dijital servo. Robot kolu ve gimbal için ideal.","price":119.90,"stock":180,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800&q=80","https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&q=80"],"spec_data":{"Tork":"11kg.cm","Dişli":"Metal"}},
+    {"sku":"ROB-KIT-4WD","name":"4WD Akıllı Robot Araba Kiti","slug":"4wd-akilli-robot-araba-kiti","description":"Arduino uyumlu 4 tekerlekli robot araba platformu. Motor, sürücü, sensör dahil.","price":449.00,"stock":45,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80","https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80"],"spec_data":{"Tekerlek":"4WD","Sensör":"HC-SR04"}},
+    {"sku":"ROB-ARM-6DOF","name":"6 Eksenli Alüminyum Robot Kolu","slug":"6-eksenli-robot-kolu","description":"6 DOF alüminyum robot kolu, MG996R x6 servo dahil. Arduino/ROS uyumlu.","price":1249.00,"stock":18,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80","https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80"],"spec_data":{"DOF":"6","Kapasite":"500g"}},
+    {"sku":"ROB-STEP-NEMA17","name":"NEMA 17 Step Motor 42x40mm","slug":"nema-17-step-motor-42x40","description":"1.8°/adım NEMA17 step motor. 3D yazıcı ve CNC projeleri için 45N.cm tork.","price":189.90,"stock":140,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&q=80","https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80"],"spec_data":{"Adım":"1.8°","Tork":"45N.cm"}},
+    {"sku":"ROB-JETSON-N4","name":"NVIDIA Jetson Nano 4GB Developer Kit","slug":"nvidia-jetson-nano-4gb","description":"128-çekirdek Maxwell GPU, Quad-Core ARM A57 yapay zeka geliştirme kartı.","price":3499.00,"stock":12,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800&q=80","https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&q=80"],"spec_data":{"GPU":"128-core Maxwell","RAM":"4GB LPDDR4"}},
+    {"sku":"ROB-GRIPPER-SG","name":"Servo Kontrollü Robotik Gripper","slug":"servo-robotik-gripper","description":"Tek servo ile paralel mekanizmalı alüminyum robotik pençe. Arduino/ROS uyumlu.","price":329.00,"stock":60,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1535378620166-273708d44e4c?w=800&q=80","https://images.unsplash.com/photo-1562813733-b31f71025d54?w=800&q=80"],"spec_data":{"Açılış":"0-80mm","Ağırlık":"120g"}},
+    {"sku":"ROB-ENC-500","name":"Optik Enkoder Modülü 500PPR","slug":"optik-enkoder-500ppr","description":"Motor hız ve pozisyon geri bildirimi için 500PPR fotoelektrik enkoder. Şaft adaptörü dahil.","price":149.90,"stock":95,"cat":"robotik","image_urls":["https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80","https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80"],"spec_data":{"PPR":"500","Çıkış":"A/B TTL"}},
 ]
 
 from app.models.base import Base
@@ -219,148 +219,37 @@ async def startup_event():
                 await db.commit()
                 logger.info("[SEED] ✅ Ürün kategorileri DB üzerinde eşleştirildi.")
                 
-            # --- Cloudinary Gerçek Ürün Görselleri (Her ürüne özel 2 görsel) ---
-            import cloudinary
-            import cloudinary.uploader
-            from app.core.config import settings
-            import asyncio
-            
-            cloudinary.config(
-                cloud_name=settings.CLOUDINARY_CLOUD_NAME,
-                api_key=settings.CLOUDINARY_API_KEY,
-                api_secret=settings.CLOUDINARY_API_SECRET
-            )
-
-            # Ürün adı (lowercase contains) → [görsel1, görsel2]
-            PRODUCT_IMAGES = {
-                'fpv brushless motor': [
-                    'https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=800',
-                    'https://images.unsplash.com/photo-1581092160607-ee67df30e7d2?w=800',
-                ],
-                'blheli': [
-                    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800',
-                    'https://images.unsplash.com/photo-1562408590-e32931084e23?w=800',
-                ],
-                'uçuş kontrolcüsü': [
-                    'https://images.unsplash.com/photo-1562408590-e32931084e23?w=800',
-                    'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800',
-                ],
-                'lipo batarya': [
-                    'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800',
-                    'https://images.unsplash.com/photo-1609692814858-f7cd2f0afa4f?w=800',
-                ],
-                'video verici': [
-                    'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800',
-                    'https://images.unsplash.com/photo-1579829366248-204fe8413f31?w=800',
-                ],
-                'karbon çerçeve': [
-                    'https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=800',
-                    'https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=800',
-                ],
-                'arduino': [
-                    'https://images.unsplash.com/photo-1553406830-ef2513450d76?w=800',
-                    'https://images.unsplash.com/photo-1608564697071-ddf911d81370?w=800',
-                ],
-                'raspberry': [
-                    'https://images.unsplash.com/photo-1580584126903-c17d41830450?w=800',
-                    'https://images.unsplash.com/photo-1629292003007-77f54519c700?w=800',
-                ],
-                'lidar': [
-                    'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800',
-                    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800',
-                ],
-                'mpu-6050': [
-                    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800',
-                    'https://images.unsplash.com/photo-1562408590-e32931084e23?w=800',
-                ],
-                'esp32': [
-                    'https://images.unsplash.com/photo-1553406830-ef2513450d76?w=800',
-                    'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800',
-                ],
-                'oled': [
-                    'https://images.unsplash.com/photo-1562408590-e32931084e23?w=800',
-                    'https://images.unsplash.com/photo-1608564697071-ddf911d81370?w=800',
-                ],
-                'breadboard': [
-                    'https://images.unsplash.com/photo-1608564697071-ddf911d81370?w=800',
-                    'https://images.unsplash.com/photo-1553406830-ef2513450d76?w=800',
-                ],
-                'mg996r': [
-                    'https://images.unsplash.com/photo-1561144257-e32e8506e4b6?w=800',
-                    'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800',
-                ],
-                'robot arba': [
-                    'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800',
-                    'https://images.unsplash.com/photo-1561144257-e32e8506e4b6?w=800',
-                ],
-                'robot kolu': [
-                    'https://images.unsplash.com/photo-1561144257-e32e8506e4b6?w=800',
-                    'https://images.unsplash.com/photo-1581092160607-ee67df30e7d2?w=800',
-                ],
-                'nema': [
-                    'https://images.unsplash.com/photo-1581092160607-ee67df30e7d2?w=800',
-                    'https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800',
-                ],
-                'jetson': [
-                    'https://images.unsplash.com/photo-1629292003007-77f54519c700?w=800',
-                    'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800',
-                ],
-                'gripper': [
-                    'https://images.unsplash.com/photo-1561144257-e32e8506e4b6?w=800',
-                    'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800',
-                ],
-                'enkoder': [
-                    'https://images.unsplash.com/photo-1581092160607-ee67df30e7d2?w=800',
-                    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800',
-                ],
-            }
-            
-            products_for_img = (await db.execute(text('SELECT id, name, image_urls FROM products'))).fetchall()
-            for product_id, name, image_urls in products_for_img:
-                # Zaten 2+ Cloudinary görseli varsa atla
-                if image_urls and isinstance(image_urls, list) and len(image_urls) >= 2:
-                    if all('res.cloudinary.com' in u for u in image_urls):
-                        continue
-                
-                name_lower = str(name).lower()
-                source_urls = None
-                
-                for keyword, urls in PRODUCT_IMAGES.items():
-                    if keyword in name_lower:
-                        source_urls = urls
-                        break
-                
-                if not source_urls:
-                    continue
-                    
-                uploaded_urls = []
-                for idx, src_url in enumerate(source_urls):
-                    try:
-                        def upload_sync(url=src_url, pid=product_id, i=idx):
-                            return cloudinary.uploader.upload(
-                                url,
-                                public_id=f'technocus/products/product_{pid}_{i}',
-                                overwrite=True,
-                                transformation=[
-                                    {'width': 800, 'height': 800, 'crop': 'fill', 'gravity': 'auto'},
-                                    {'quality': 'auto', 'fetch_format': 'auto'}
-                                ]
-                            )
-                        result = await asyncio.to_thread(upload_sync)
-                        uploaded_urls.append(result['secure_url'])
-                    except Exception as e:
-                        logger.error(f"[CLOUDINARY] ❌ {name} görsel {idx} yüklenemedi: {e}")
-                
-                if uploaded_urls:
-                    arr_literal = "{" + ",".join(uploaded_urls) + "}"
-                    await db.execute(
-                        text("UPDATE products SET image_urls = :urls::text[] WHERE id = :id"),
-                        {"urls": arr_literal, "id": product_id}
-                    )
-                    logger.info(f"[CLOUDINARY] ✅ {name} → {len(uploaded_urls)} görsel yüklendi")
-            
+            # --- Her ürüne 2 özel Unsplash görseli (Name tabanlı doğrudan güncelleme) ---
+            image_updates = [
+                ("%FPV Brushless Motor%", ["https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=800&q=80", "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=800&q=80"]),
+                ("%BLHeli%", ["https://images.unsplash.com/photo-1604754742629-3e5728249d73?w=800&q=80", "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&q=80"]),
+                ("%Speedybee F7%", ["https://images.unsplash.com/photo-1579829366248-204fe8413f31?w=800&q=80", "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800&q=80"]),
+                ("%LiPo Batarya%", ["https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80", "https://images.unsplash.com/photo-1496065187959-7f07b8353c55?w=800&q=80"]),
+                ("%Video Verici%", ["https://images.unsplash.com/photo-1551808525-51a94da548ce?w=800&q=80", "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80"]),
+                ("%Karbon Çerçeve%", ["https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=800&q=80", "https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=800&q=80"]),
+                ("%Arduino Uno%", ["https://images.unsplash.com/photo-1608564697071-ddf911d81370?w=800&q=80", "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=800&q=80"]),
+                ("%Raspberry Pi 5%", ["https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&q=80", "https://images.unsplash.com/photo-1526406915894-7bcd65f60845?w=800&q=80"]),
+                ("%LiDAR Sensör%", ["https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?w=800&q=80", "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80"]),
+                ("%MPU-6050%", ["https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80", "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80"]),
+                ("%ESP32%", ["https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800&q=80", "https://images.unsplash.com/photo-1560732488-6b0df240254a?w=800&q=80"]),
+                ("%OLED Ekran%", ["https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=800&q=80", "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&q=80"]),
+                ("%Breadboard%", ["https://images.unsplash.com/photo-1553406830-ef2513450d76?w=800&q=80", "https://images.unsplash.com/photo-1544256718-3bcf237f3974?w=800&q=80"]),
+                ("%MG996R Servo%", ["https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800&q=80", "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&q=80"]),
+                ("%4WD Robot Araba%", ["https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80", "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80"]),
+                ("%Robot Kolu%", ["https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80", "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80"]),
+                ("%NEMA 17 Step Motor%", ["https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&q=80", "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80"]),
+                ("%Jetson Nano%", ["https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800&q=80", "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&q=80"]),
+                ("%Robotik Gripper%", ["https://images.unsplash.com/photo-1535378620166-273708d44e4c?w=800&q=80", "https://images.unsplash.com/photo-1562813733-b31f71025d54?w=800&q=80"]),
+                ("%Optik Enkoder%", ["https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80", "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80"])
+            ]
+            for pattern, urls in image_updates:
+                await db.execute(
+                    text("UPDATE products SET image_urls = :urls::text[] WHERE name ILIKE :pattern"),
+                    {"urls": urls, "pattern": pattern}
+                )
             await db.commit()
-            logger.info("[SEED] ✅ Tüm Cloudinary ürün görselleri güncellendi.")
+            logger.info("[SEED] ✅ Tüm ürün görselleri name ILIKE ile güncellendi (2 görsel/ürün).")
+
             
     except Exception as e:
         logger.error(f"[SEED] Hata: {e}")
