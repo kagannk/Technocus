@@ -72,7 +72,7 @@ docker compose down         # durdur
 - Kategori sayfaları → ✅ Tamamlandı
 - Siparişler gerçek API → ✅ Tamamlandı
 - Ürün görselleri → ✅ Tamamlandı (Cloudinary)
-- Admin görsel yükleme → ✅ Tamamlandı
+- Admin görsel yükleme → ✅ Tamamlandı (sürükle-bırak, URL ile ekleme, silme, çoklu yükleme)
 
 ### ⚠️ Kullanıcının Yapması Gereken
 - Vercel'e NEXT_PUBLIC_API_URL env variable eklenecek (yukarıya bak)
