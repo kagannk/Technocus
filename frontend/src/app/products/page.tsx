@@ -25,7 +25,7 @@ export default function ProductsPage() {
   useEffect(() => {
     setLoading(true);
     const url = selectedCategory
-      ? `${API_URL}/api/products/?category_slug=${selectedCategory}&limit=200`
+      ? `${API_URL}/api/products/?category=${selectedCategory}&limit=200`
       : `${API_URL}/api/products/?limit=200`;
 
     fetch(url)
