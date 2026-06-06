@@ -6,7 +6,7 @@
 
 ## Son Güncelleme
 - Tarih: 6 Haziran 2026
-- Son odak: Admin ürün düzenleme görsel ve veri kaydetme hatası (NotNullViolation) düzeltildi
+- Son odak: Admin ürün düzenleme kaydetme hatası (NotNullViolation) düzeltildi + 401 session yönlendirmesi eklendi
 
 ## Çalışma Kuralı — ÖNEMLİ
 Her görev tamamlandığında CLAUDE.md otomatik güncellenir.
