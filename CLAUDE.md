@@ -71,7 +71,7 @@ docker compose down         # durdur
 - Sepete ekleme akışı → ✅ Tamamlandı
 - Kategori sayfaları → ✅ Tamamlandı
 - Siparişler gerçek API → ✅ Tamamlandı
-- Ürün görselleri → ✅ Tamamlandı (Cloudinary)
+- Ürün görselleri → ✅ Tamamlandı (Cloudinary, her ürüne özel 2 görsel)
 - Admin görsel yükleme → ✅ Tamamlandı (sürükle-bırak, URL ile ekleme, silme, çoklu yükleme)
 
 ### ⚠️ Kullanıcının Yapması Gereken
