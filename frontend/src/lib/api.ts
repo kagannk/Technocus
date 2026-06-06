@@ -19,6 +19,14 @@ export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
   });
 
   if (!res.ok) {
+    if (res.status === 401 && !isAuthEndpoint && typeof window !== "undefined") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("user_name");
+      const isAdminPage = window.location.pathname.startsWith("/admin");
+      window.location.href = isAdminPage ? "/admin/login" : "/login";
+      return;
+    }
     const errorText = await res.text();
     console.error(`API Error [${res.status}] ${endpoint}:`, errorText);
     throw new Error(errorText);
