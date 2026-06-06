@@ -71,6 +71,8 @@ docker compose down         # durdur
 - Sepete ekleme akışı → ✅ Tamamlandı
 - Kategori sayfaları → ✅ Tamamlandı
 - Siparişler gerçek API → ✅ Tamamlandı
+- Ürün görselleri → ✅ Tamamlandı (Cloudinary)
+- Admin görsel yükleme → ✅ Tamamlandı
 
 ### ⚠️ Kullanıcının Yapması Gereken
 - Vercel'e NEXT_PUBLIC_API_URL env variable eklenecek (yukarıya bak)
@@ -79,8 +81,7 @@ docker compose down         # durdur
 
 ### ⏳ Bekleyen Görevler (öncelik sırasıyla)
 1. [AKTİF] Satın alma akışı (iyzico) uçtan uca çalışacak
-2. [BEKLEYEN] Her ürüne ayrı Cloudinary fotoğrafı eklenecek
-3. n8n workflow'ları kurulacak
+2. n8n workflow'ları kurulacak
 
 ## Test Hesapları
 
