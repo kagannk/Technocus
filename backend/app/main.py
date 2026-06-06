@@ -274,15 +274,3 @@ async def root():
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
-
-@app.get("/api/test-cloudinary")
-async def test_cloudinary():
-    import os
-    from app.core.config import settings
-    return {
-        "cloud_name_exists": bool(settings.CLOUDINARY_CLOUD_NAME),
-        "api_key_exists": bool(settings.CLOUDINARY_API_KEY),
-        "api_secret_exists": bool(settings.CLOUDINARY_API_SECRET),
-        "cloudinary_url_exists": "CLOUDINARY_URL" in os.environ,
-        "cloudinary_url_val": os.environ.get("CLOUDINARY_URL", "")[:35] if os.environ.get("CLOUDINARY_URL") else ""
-    }
