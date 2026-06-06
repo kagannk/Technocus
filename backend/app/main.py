@@ -354,7 +354,7 @@ async def startup_event():
                 if uploaded_urls:
                     arr_literal = "{" + ",".join(uploaded_urls) + "}"
                     await db.execute(
-                        text("UPDATE products SET image_urls = :urls WHERE id = :id"),
+                        text("UPDATE products SET image_urls = :urls::text[] WHERE id = :id"),
                         {"urls": arr_literal, "id": product_id}
                     )
                     logger.info(f"[CLOUDINARY] ✅ {name} → {len(uploaded_urls)} görsel yüklendi")
