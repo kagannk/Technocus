@@ -152,7 +152,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
 
       const productData = {
         name: formData.get('name'),
-        sku: formData.get('sku'),
+        sku: product.sku,
         description: formData.get('description'),
         price: parseFloat(formData.get('price') as string),
         stock: parseInt(formData.get('stock') as string),

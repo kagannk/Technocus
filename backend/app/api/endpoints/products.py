@@ -90,7 +90,8 @@ async def update_product(product_id: int, product_in: ProductUpdate, db: AsyncSe
         
     update_data = product_in.model_dump(exclude_unset=True)
     for field, value in update_data.items():
-        setattr(product, field, value)
+        if value is not None or field in ["description", "spec_data", "image_urls"]:
+            setattr(product, field, value)
         
     await db.commit()
     await db.refresh(product)

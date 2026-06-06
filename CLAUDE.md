@@ -5,8 +5,8 @@
 - Repo: https://github.com/kagannk/Technocus
 
 ## Son Güncelleme
-- Tarih: 23 Mayıs 2026
-- Son odak: CORS + API bağlantısı + seed users + 401 fix
+- Tarih: 6 Haziran 2026
+- Son odak: Admin ürün düzenleme görsel ve veri kaydetme hatası (NotNullViolation) düzeltildi
 
 ## Çalışma Kuralı — ÖNEMLİ
 Her görev tamamlandığında CLAUDE.md otomatik güncellenir.
@@ -73,6 +73,7 @@ docker compose down         # durdur
 - Siparişler gerçek API → ✅ Tamamlandı
 - Ürün görselleri → ✅ Tamamlandı (Cloudinary, her ürüne özel 2 görsel)
 - Admin görsel yükleme → ✅ Tamamlandı (sürükle-bırak, URL ile ekleme, silme, çoklu yükleme)
+- Admin ürün düzenleme görsel ve veri kaydetme hatası (NotNullViolation) düzeltildi → ✅ Tamamlandı
 
 ### ⚠️ Kullanıcının Yapması Gereken
 - Vercel'e NEXT_PUBLIC_API_URL env variable eklenecek (yukarıya bak)
