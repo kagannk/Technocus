@@ -16,6 +16,8 @@ class Settings(BaseSettings):
     IYZICO_SECRET_KEY: str = ""
     IYZICO_BASE_URL: str = ""
 
+    FRONTEND_URL: str = "http://localhost:3000"
+
     N8N_WEBHOOK_ORDER_CREATED: str = ""
     N8N_WEBHOOK_LOW_STOCK: str = ""
     N8N_WEBHOOK_ORDER_APPROVED: str = ""

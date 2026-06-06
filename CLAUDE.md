@@ -6,7 +6,7 @@
 
 ## Son Güncelleme
 - Tarih: 6 Haziran 2026
-- Son odak: Admin ürün düzenleme kaydetme hatası (NotNullViolation) düzeltildi + 401 session yönlendirmesi eklendi
+- Son odak: Ürünler filtre parametre hatası düzeltildi + Iyzico entegrasyonu doğrulandı
 
 ## Çalışma Kuralı — ÖNEMLİ
 Her görev tamamlandığında CLAUDE.md otomatik güncellenir.
@@ -74,15 +74,20 @@ docker compose down         # durdur
 - Ürün görselleri → ✅ Tamamlandı (Cloudinary, her ürüne özel 2 görsel)
 - Admin görsel yükleme → ✅ Tamamlandı (sürükle-bırak, URL ile ekleme, silme, çoklu yükleme)
 - Admin ürün düzenleme görsel ve veri kaydetme hatası (NotNullViolation) düzeltildi → ✅ Tamamlandı
+- Satın alma akışı (iyzico) entegrasyonu ve dynamic callback yönlendirmesi → ✅ Tamamlandı
+- API hata cevaplarının frontend toast'larda temiz gösterilmesi (FastAPI JSON parse) → ✅ Tamamlandı
 
 ### ⚠️ Kullanıcının Yapması Gereken
 - Vercel'e NEXT_PUBLIC_API_URL env variable eklenecek (yukarıya bak)
-- Railway'e FRONTEND_URL env variable eklenecek (yukarıya bak)
+- Railway'e FRONTEND_URL env variable eklenecek = `https://technocus.vercel.app` (Bu olmazsa ödeme sonrası localhost'a yönlendirir!)
+- Railway'e Iyzico Sandbox bilgileri eklenecek:
+  - `IYZICO_API_KEY` = `sandbox-qZuwUpfkLSQJT2W41tXZIFHK9b03ixi1`
+  - `IYZICO_SECRET_KEY` = `sandbox-MkRVVRHFDECaFSGClPfANFjc4HsiUetS`
+  - `IYZICO_BASE_URL` = `https://sandbox-api.iyzipay.com`
 - Her iki platformda redeploy tetiklenecek
 
 ### ⏳ Bekleyen Görevler (öncelik sırasıyla)
-1. [AKTİF] Satın alma akışı (iyzico) uçtan uca çalışacak
-2. n8n workflow'ları kurulacak
+1. n8n workflow'ları kurulacak
 
 ## Test Hesapları
 

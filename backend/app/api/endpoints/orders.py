@@ -176,7 +176,8 @@ async def create_order(order_in: OrderCreate, db: AsyncSession = Depends(get_db)
 async def iyzico_callback(token: str = Form(...), db: AsyncSession = Depends(get_db)):
     res = retrieve_checkout_form_result(token)
     from fastapi.responses import RedirectResponse
-    frontend_url = "http://localhost:3000"
+    from app.core.config import settings
+    frontend_url = settings.FRONTEND_URL.rstrip('/')
     
     if res.get('status') == 'success' and res.get('paymentStatus') == 'SUCCESS':
         order_id = int(res.get('basketId'))

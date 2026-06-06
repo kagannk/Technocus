@@ -29,7 +29,23 @@ export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
     }
     const errorText = await res.text();
     console.error(`API Error [${res.status}] ${endpoint}:`, errorText);
-    throw new Error(errorText);
+    
+    let errorMessage = errorText;
+    try {
+      const parsed = JSON.parse(errorText);
+      if (parsed && typeof parsed === "object") {
+        if (typeof parsed.detail === "string") {
+          errorMessage = parsed.detail;
+        } else if (typeof parsed.detail === "object" && parsed.detail !== null) {
+          errorMessage = JSON.stringify(parsed.detail);
+        } else if (parsed.message) {
+          errorMessage = parsed.message;
+        }
+      }
+    } catch (e) {
+      // not JSON
+    }
+    throw new Error(errorMessage);
   }
 
   return res.json();
