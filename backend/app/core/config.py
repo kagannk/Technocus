@@ -6,7 +6,7 @@ class Settings(BaseSettings):
 
     SECRET_KEY: str = "your-super-secret-jwt-key"
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 129600 # 90 days
 
     CLOUDINARY_CLOUD_NAME: str = ""
     CLOUDINARY_API_KEY: str = ""

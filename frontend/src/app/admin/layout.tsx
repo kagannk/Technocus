@@ -4,14 +4,16 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 
+import { getStorageItem } from '@/lib/auth';
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
+    const token = getStorageItem('token');
+    const role = getStorageItem('role');
     
     // Allow login page access regardless of auth state to prevent infinite loops, 
     // but typically you'd redirect away if they are already logged in. Simple implementation for now.

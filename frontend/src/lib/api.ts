@@ -1,7 +1,9 @@
+import { getStorageItem, clearStorage } from './auth';
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const token = getStorageItem("token");
   const headers = {
     "Content-Type": "application/json",
     ...options.headers,
@@ -20,9 +22,7 @@ export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
 
   if (!res.ok) {
     if (res.status === 401 && !isAuthEndpoint && typeof window !== "undefined") {
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      localStorage.removeItem("user_name");
+      clearStorage();
       const isAdminPage = window.location.pathname.startsWith("/admin");
       window.location.href = isAdminPage ? "/admin/login" : "/login";
       return;

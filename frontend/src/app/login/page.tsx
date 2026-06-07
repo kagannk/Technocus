@@ -6,10 +6,12 @@ import Link from 'next/link';
 import { apiFetch } from '@/lib/api';
 import toast from 'react-hot-toast';
 import { useCartStore } from '@/store/useCartStore';
+import { setStorageItem } from '@/lib/auth';
 
 export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -28,9 +30,9 @@ export default function LoginPage() {
         body: formParams.toString()
       });
 
-      localStorage.setItem('token', data.access_token);
-      localStorage.setItem('user_name', data.full_name || 'Kullanıcı');
-      if (data.is_admin) localStorage.setItem('role', 'admin');
+      setStorageItem('token', data.access_token, rememberMe);
+      setStorageItem('user_name', data.full_name || 'Kullanıcı', rememberMe);
+      if (data.is_admin) setStorageItem('role', 'admin', rememberMe);
       
       // Guest Cart Merge
       try {
@@ -92,6 +94,17 @@ export default function LoginPage() {
                 value={formData.password}
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
               />
+            </div>
+
+            <div className="flex items-center gap-2 pt-1 select-none">
+              <input 
+                type="checkbox" 
+                id="remember_me" 
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-4.5 h-4.5 rounded border-navy-600 bg-navy-900 text-electric-default focus:ring-electric-default cursor-pointer"
+              />
+              <label htmlFor="remember_me" className="text-xs font-semibold text-slate-300 cursor-pointer">Beni Hatırla</label>
             </div>
 
             <button 

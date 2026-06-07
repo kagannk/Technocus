@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { apiFetch } from '@/lib/api';
+import { setStorageItem, removeStorageItem } from '@/lib/auth';
 
 export default function AdminLogin() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -26,17 +28,17 @@ export default function AdminLogin() {
         }),
       });
 
-      localStorage.setItem('token', data.access_token);
+      setStorageItem('token', data.access_token, rememberMe);
       
       const userRes = await apiFetch('/api/auth/me');
-      localStorage.setItem('role', userRes.is_admin ? 'admin' : 'user');
+      setStorageItem('role', userRes.is_admin ? 'admin' : 'user', rememberMe);
       
       if (userRes.is_admin) {
         router.push('/admin');
       } else {
         setError('Erişim reddedildi. Sadece yöneticiler giriş yapabilir.');
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
+        removeStorageItem('token');
+        removeStorageItem('role');
       }
     } catch (err) {
       setError('Geçersiz e-posta veya şifre.');
@@ -93,6 +95,17 @@ export default function AdminLogin() {
                 placeholder="••••••••"
               />
             </div>
+          </div>
+
+          <div className="flex items-center gap-2 pt-4 select-none">
+            <input 
+              type="checkbox" 
+              id="remember_me" 
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="w-4.5 h-4.5 rounded border-navy-600 bg-navy-900 text-electric-default focus:ring-electric-default cursor-pointer"
+            />
+            <label htmlFor="remember_me" className="text-xs font-semibold text-slate-300 cursor-pointer">Beni Hatırla</label>
           </div>
 
           <button

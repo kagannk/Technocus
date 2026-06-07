@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { apiFetch } from '@/lib/api';
+import { getStorageItem, setStorageItem, clearStorage } from '@/lib/auth';
 import { useCartStore } from '@/store/useCartStore';
 
 export default function Navbar() {
@@ -32,29 +33,29 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     
     // Check auth status
-    const token = localStorage.getItem('token');
+    const token = getStorageItem('token');
     if (token) {
       setIsAuthenticated(true);
-      setUserName(localStorage.getItem('user_name') || 'Hesabım');
+      setUserName(getStorageItem('user_name') || 'Hesabım');
       
       // Fetch fresh user data
       apiFetch('/api/auth/me')
         .then(user => {
           if (user.full_name) {
             setUserName(user.full_name);
-            localStorage.setItem('user_name', user.full_name);
+            const isRemembered = !!localStorage.getItem('token');
+            setStorageItem('user_name', user.full_name, isRemembered);
           }
           if (user.is_admin) {
-            localStorage.setItem('role', 'admin');
+            const isRemembered = !!localStorage.getItem('token');
+            setStorageItem('role', 'admin', isRemembered);
           }
         })
         .catch(err => {
           console.error("Auth check failed:", err);
           // If token is invalid/expired, log them out
           if (err.message && err.message.includes("401")) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user_name');
-            localStorage.removeItem('role');
+            clearStorage();
             setIsAuthenticated(false);
           }
         });
@@ -99,9 +100,7 @@ export default function Navbar() {
   }, [searchQuery]);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    localStorage.removeItem('user_name');
+    clearStorage();
     setIsAuthenticated(false);
     setIsUserMenuOpen(false);
     router.push('/');

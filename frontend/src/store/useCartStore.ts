@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { apiFetch } from '@/lib/api';
+import { getStorageItem } from '@/lib/auth';
 
 export interface CartItem {
   id: number;
@@ -26,7 +27,7 @@ interface CartState {
   syncGuestCart: () => Promise<void>;
 }
 
-const hasToken = () => typeof window !== "undefined" ? !!localStorage.getItem("token") : false;
+const hasToken = () => !!getStorageItem("token");
 
 export const useCartStore = create<CartState>()(
   persist(

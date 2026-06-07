@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { apiFetch } from '@/lib/api';
+import { getStorageItem } from '@/lib/auth';
 
 export default function NewProductPage() {
   const router = useRouter();
@@ -46,7 +47,7 @@ export default function NewProductPage() {
           imageFormData.append('files', file);
         });
 
-        const token = localStorage.getItem("token");
+        const token = getStorageItem("token");
         const uploadRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/upload/images`, {
           method: 'POST',
           headers: {

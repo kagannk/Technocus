@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { getStorageItem } from '@/lib/auth';
 
 export default function BulkImportPage() {
   const router = useRouter();
@@ -44,7 +45,7 @@ export default function BulkImportPage() {
       formData.append("file", file);
       formData.append("mode", mode);
 
-      const token = localStorage.getItem("token");
+      const token = getStorageItem("token");
       const url = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/products/bulk-import`;
       const res = await fetch(url, {
         method: "POST",
