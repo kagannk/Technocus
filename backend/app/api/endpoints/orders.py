@@ -187,7 +187,7 @@ async def iyzico_callback(token: str = Form(...), db: AsyncSession = Depends(get
             order.status = "paid"
             await db.commit()
             await notify_order_approved(order.id, order.user_id) # Should be user email but mock is fine
-            return RedirectResponse(url=f"{frontend_url}/order-confirmation?order=TS-{order_id:06d}", status_code=303)
+            return RedirectResponse(url=f"{frontend_url}/order-confirmation?order_id={order_id}", status_code=303)
             
     return RedirectResponse(url=f"{frontend_url}/cart?error=payment_failed", status_code=303)
 

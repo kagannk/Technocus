@@ -66,7 +66,7 @@ export default function CheckoutPage() {
         shipping_address: `${formData.address}, ${formData.district}/${formData.city}`,
         phone: formData.phone,
         items: items.map(item => ({
-          product_id: item.id,
+          product_id: item.productId || item.id,
           quantity: item.quantity
         })),
         save_card: saveCard
@@ -92,7 +92,7 @@ export default function CheckoutPage() {
       if (res.status === 'success') {
         toast.success("Ödemeniz başarıyla alındı!");
         clearCart();
-        router.push('/checkout/success');
+        router.push(`/order-confirmation?order_id=${res.order_id}`);
       }
     } catch (err: any) {
       toast.error(err.message || "Ödeme başlatılamadı.");

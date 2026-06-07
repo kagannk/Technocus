@@ -48,7 +48,7 @@ export default function CartPage() {
                  <img src={item.image} alt={item.name} className="object-contain w-full h-full" />
               </div>
               <div className="flex-1 min-w-0">
-                <Link href={`/products/${item.sku}-${item.id}`} className="text-lg font-bold text-slate-200 hover:text-electric-default transition-colors line-clamp-1">
+                <Link href={`/products/${item.sku}-${item.productId || item.id}`} className="text-lg font-bold text-slate-200 hover:text-electric-default transition-colors line-clamp-1">
                   {item.name}
                 </Link>
                 <div className="text-xs text-slate-500 mt-1 uppercase tracking-wider">SKU: {item.sku}</div>

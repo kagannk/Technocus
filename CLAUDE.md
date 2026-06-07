@@ -5,8 +5,8 @@
 - Repo: https://github.com/kagannk/Technocus
 
 ## Son Güncelleme
-- Tarih: 6 Haziran 2026
-- Son odak: Ürünler filtre parametre hatası düzeltildi + Iyzico entegrasyonu doğrulandı
+- Tarih: 7 Haziran 2026
+- Son odak: CartItem ve Product ID eşleşme hatası düzeltildi + Sipariş sonrası yönlendirme güncellendi
 
 ## Çalışma Kuralı — ÖNEMLİ
 Her görev tamamlandığında CLAUDE.md otomatik güncellenir.
@@ -76,6 +76,8 @@ docker compose down         # durdur
 - Admin ürün düzenleme görsel ve veri kaydetme hatası (NotNullViolation) düzeltildi → ✅ Tamamlandı
 - Satın alma akışı (iyzico) entegrasyonu ve dynamic callback yönlendirmesi → ✅ Tamamlandı
 - API hata cevaplarının frontend toast'larda temiz gösterilmesi (FastAPI JSON parse) → ✅ Tamamlandı
+- Sepette ve ödeme adımında CartItem ID - Product ID uyuşmazlığı giderildi (Yanlış ürün satın alınması veya link kırılmaları çözüldü) → ✅ Tamamlandı
+- Satın alım sonrasında dinamik order_id ile sipariş onay sayfasına yönlendirme ve sipariş takip butonu entegre edildi → ✅ Tamamlandı
 
 ### ⚠️ Kullanıcının Yapması Gereken
 - Vercel'e NEXT_PUBLIC_API_URL env variable eklenecek (yukarıya bak)
