@@ -1,5 +1,15 @@
 "use client";
+
+import toast from "react-hot-toast";
+
 export default function WorkflowsPage() {
+  const handleGoToDesigner = () => {
+    toast.success("n8n İş Akışı Tasarımcısına yönlendiriliyorsunuz (n8n:5678)...");
+    setTimeout(() => {
+      window.open("http://localhost:5678", "_blank");
+    }, 1200);
+  };
+
   return (
     <div className="space-y-6">
       <div className="mb-8 flex justify-between items-center">
@@ -7,7 +17,10 @@ export default function WorkflowsPage() {
            <h1 className="text-2xl font-bold text-white mb-1">n8n İş Akışları (Webhooks)</h1>
            <p className="text-sm text-slate-400">Sistem olaylarını dinleyen aktif otomasyon süreçleri.</p>
         </div>
-        <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-2.5 px-5 rounded-lg transition-all shadow-[0_5px_15px_rgba(147,51,234,0.3)] transform hover:-translate-y-0.5 flex items-center gap-2">
+        <button
+          onClick={handleGoToDesigner}
+          className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-2.5 px-5 rounded-lg transition-all shadow-[0_5px_15px_rgba(147,51,234,0.3)] transform hover:-translate-y-0.5 flex items-center gap-2"
+        >
            İş Akışı Tasarımcısına Git
            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
         </button>
