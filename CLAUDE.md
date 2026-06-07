@@ -78,6 +78,7 @@ docker compose down         # durdur
 - API hata cevaplarının frontend toast'larda temiz gösterilmesi (FastAPI JSON parse) → ✅ Tamamlandı
 - Sepette ve ödeme adımında CartItem ID - Product ID uyuşmazlığı giderildi (Yanlış ürün satın alınması veya link kırılmaları çözüldü) → ✅ Tamamlandı
 - Satın alım sonrasında dinamik order_id ile sipariş onay sayfasına yönlendirme ve sipariş takip butonu entegre edildi → ✅ Tamamlandı
+- CartItem TypeScript arayüzündeki eksik 'productId' tanımı eklenerek Vercel build hatası çözüldü → ✅ Tamamlandı
 
 ### ⚠️ Kullanıcının Yapması Gereken
 - Vercel'e NEXT_PUBLIC_API_URL env variable eklenecek (yukarıya bak)

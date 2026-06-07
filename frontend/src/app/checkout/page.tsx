@@ -30,10 +30,6 @@ export default function CheckoutPage() {
   });
 
   useEffect(() => {
-    if (isHydrated && items.length === 0) {
-      router.push('/cart');
-    }
-    
     // Auto-fill user info if logged in
     const storedName = localStorage.getItem('user_name');
     if (storedName && !formData.full_name) {
@@ -91,7 +87,6 @@ export default function CheckoutPage() {
 
       if (res.status === 'success') {
         toast.success("Ödemeniz başarıyla alındı!");
-        clearCart();
         router.push(`/order-confirmation?order_id=${res.order_id}`);
       }
     } catch (err: any) {
@@ -100,6 +95,18 @@ export default function CheckoutPage() {
       setLoading(false);
     }
   };
+
+  if (isHydrated && items.length === 0) {
+    return (
+      <div className="py-20 text-center">
+        <h2 className="text-2xl font-bold text-white mb-4">Sepetiniz Boş</h2>
+        <p className="text-slate-400 mb-8">Ödeme yapabilmek için sepetinizde en az bir ürün bulunmalıdır.</p>
+        <Link href="/cart" className="bg-electric-default hover:bg-electric-hover text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg inline-block">
+          Sepetime Git
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="py-12">
