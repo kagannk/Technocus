@@ -15,6 +15,8 @@ export default function CheckoutPage() {
   const [savedCards, setSavedCards] = useState<any[]>([]);
   const [selectedCardToken, setSelectedCardToken] = useState<string | null>(null);
   const [saveCard, setSaveCard] = useState(false);
+  const [savedAddresses, setSavedAddresses] = useState<any[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     full_name: '',
     email: '',
@@ -50,8 +52,46 @@ export default function CheckoutPage() {
         console.error("Kayıtlı kartlar yüklenemedi:", err);
       }
     };
+
+    // Fetch user and saved addresses
+    const fetchUserAndAddresses = async () => {
+      try {
+        const userRes = await apiFetch('/api/auth/me');
+        if (userRes && userRes.email) {
+          const stored = localStorage.getItem(`technocus_addresses_${userRes.email}`);
+          if (stored) {
+            const addrList = JSON.parse(stored);
+            setSavedAddresses(addrList);
+          }
+          if (userRes.full_name && !formData.full_name) {
+            setFormData(prev => ({ ...prev, full_name: userRes.full_name }));
+          }
+        }
+      } catch (err) {
+        console.error("Adres bilgileri ve kullanıcı yüklenemedi:", err);
+      }
+    };
+
     fetchSavedCards();
+    fetchUserAndAddresses();
   }, [items, isHydrated, router]);
+
+  const handleSelectAddress = (addrId: string) => {
+    setSelectedAddressId(addrId);
+    const selected = savedAddresses.find(a => a.id === addrId);
+    if (selected) {
+      setFormData(prev => ({
+        ...prev,
+        full_name: selected.receiver_name,
+        phone: selected.phone,
+        address: selected.address,
+        city: selected.city,
+        district: selected.district
+      }));
+      toast.success(`"${selected.title}" adresi seçildi.`);
+    }
+  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -121,6 +161,65 @@ export default function CheckoutPage() {
               Teslimat Bilgileri
             </h2>
             
+            {savedAddresses.length > 0 && (
+              <div className="mb-8 p-4 bg-navy-900/40 border border-navy-700/60 rounded-2xl">
+                <h3 className="text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider">Kayıtlı Adreslerim</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {savedAddresses.map((addr) => (
+                    <div
+                      key={addr.id}
+                      onClick={() => handleSelectAddress(addr.id)}
+                      className={`p-4 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between text-left ${
+                        selectedAddressId === addr.id ? 'border-electric-default bg-electric-default/5' : 'border-navy-700 bg-navy-900/50 hover:border-navy-600'
+                      }`}
+                    >
+                      <div>
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className="text-sm font-bold text-white">{addr.title}</span>
+                          {addr.is_corporate && (
+                            <span className="text-[9px] bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-1.5 py-0.5 rounded font-semibold uppercase">Kurumsal</span>
+                          )}
+                        </div>
+                        <p className="text-xs text-slate-400 line-clamp-2">{addr.address}, {addr.district}/{addr.city}</p>
+                      </div>
+                      <div className="flex items-center justify-between mt-3 pt-2 border-t border-navy-800/60">
+                        <span className="text-[10px] text-slate-500">{addr.receiver_name}</span>
+                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${selectedAddressId === addr.id ? 'border-electric-default bg-electric-default' : 'border-navy-600'}`}>
+                          {selectedAddressId === addr.id && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  <div
+                    onClick={() => {
+                      setSelectedAddressId(null);
+                      setFormData(prev => ({
+                        ...prev,
+                        full_name: '',
+                        phone: '',
+                        address: '',
+                        district: '',
+                        city: 'İstanbul'
+                      }));
+                    }}
+                    className={`p-4 rounded-2xl border-2 cursor-pointer transition-all flex items-center justify-between ${
+                      selectedAddressId === null ? 'border-electric-default bg-electric-default/5' : 'border-navy-700 bg-navy-900/50 hover:border-navy-600'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-navy-700 rounded-xl flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4"></path></svg>
+                      </div>
+                      <p className="text-sm text-white font-bold">Yeni Adres Gir</p>
+                    </div>
+                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${selectedAddressId === null ? 'border-electric-default bg-electric-default' : 'border-navy-600'}`}>
+                      {selectedAddressId === null && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-slate-400 mb-2">Ad Soyad</label>
