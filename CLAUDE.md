@@ -77,7 +77,8 @@ docker compose down         # durdur
 - Satın alma akışı (iyzico) entegrasyonu ve dynamic callback yönlendirmesi → ✅ Tamamlandı
 - API hata cevaplarının frontend toast'larda temiz gösterilmesi (FastAPI JSON parse) → ✅ Tamamlandı
 - Sepette ve ödeme adımında CartItem ID - Product ID uyuşmazlığı giderildi (Yanlış ürün satın alınması veya link kırılmaları çözüldü) → ✅ Tamamlandı
-- Satın alım sonrasında dinamik order_id ile sipariş onay sayfasına yönlendirme ve sipariş takip butonu entegre edildi → ✅ Tamamlandı
+- Sipariş geçmişim (/account/orders) sayfasında toplam ürün miktarı hesabı düzeltildi (farklı ürün sayısı yerine tüm ürün adetlerinin toplamı gösteriliyor) → ✅ Tamamlandı
+- Sipariş geçmişim sayfasında "Detayları Gör" butonu işlevsel hale getirildi (ürün bazlı liste, adetler, fiyatlar, teslimat adresi ve kargo takibini gösteren akordeon arayüzü) → ✅ Tamamlandı
 - CartItem TypeScript arayüzündeki eksik 'productId' tanımı eklenerek Vercel build hatası çözüldü → ✅ Tamamlandı
 
 ### ⚠️ Kullanıcının Yapması Gereken
