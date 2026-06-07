@@ -20,7 +20,7 @@ interface CartState {
   addItem: (product: any, quantity: number) => Promise<void>;
   removeItem: (id: any) => Promise<void>;
   updateQuantity: (id: any, quantity: number) => Promise<void>;
-  clearCart: () => void;
+  clearCart: () => void | Promise<void>;
   getTotalItems: () => number;
   getTotalPrice: () => number;
   fetchCart: () => Promise<void>;
@@ -162,7 +162,16 @@ export const useCartStore = create<CartState>()(
         }
       },
 
-      clearCart: () => set({ items: [] }),
+      clearCart: async () => {
+        set({ items: [] });
+        if (hasToken()) {
+          try {
+            await apiFetch('/api/cart', { method: 'DELETE' });
+          } catch (err) {
+            console.error("Sepet temizlenirken hata oluştu:", err);
+          }
+        }
+      },
 
       getTotalItems: () => {
         return get().items.reduce((total, item) => total + item.quantity, 0);

@@ -153,6 +153,11 @@ async def create_order(order_in: OrderCreate, db: AsyncSession = Depends(get_db)
         if product.stock < product.min_stock_alert:
             await notify_low_stock(product.id, product.name, product.stock)
             
+    # Clear user's cart on successful checkout
+    from app.models.cart import CartItem
+    from sqlalchemy import delete
+    await db.execute(delete(CartItem).where(CartItem.user_id == current_user.id))
+            
     await db.commit()
     await db.refresh(db_order)
     
